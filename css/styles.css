@@ -79,6 +79,9 @@ figure p img {
 [for="themer"] :focus + [aria-hidden] {
     outline: 4px solid #999;
 }
+[for="themer"]{
+    cursor: pointer;
+}
 a {
   outline-offset: 2px;
 }
@@ -367,7 +370,7 @@ caption {
 }
 [role="contentinfo"] {
     font-size: 0.85rem;
-    margin-top: 4rem;
+    margin-top: 3.2rem;
     text-align: center;
 }
 
@@ -449,8 +452,10 @@ caption {
   text-align: center;
 }
 #disqus-button {
-  width: 100%;
   padding: 0.25em 0.75em;
+}
+#disqus-button:hover{
+    cursor: pointer;
 }
 #disqus-comments {
   display: none; 
@@ -460,6 +465,7 @@ caption {
 .patterns-list {
     list-style: none;
     margin-left: 0;
+    
 }
 .patterns-list h2 {
     font-size: 1.25rem;
@@ -476,7 +482,7 @@ caption {
 
 /* Tags */
 .tags {
-    margin-top: 0;
+    margin-top: 0.3rem;
     font-size: 0.85rem;
 }
 .tags * {
@@ -493,7 +499,7 @@ caption {
 
 /* Date */
 .date {
-    margin-top: 0;
+    margin-top: 0.2rem;
     font-size: 0.85rem;
 }
 
@@ -1039,3 +1045,31 @@ h1 svg {
   background: rgba(0,0,0,.8);
   color: #fefefe;
 }
+/*滚动条*/
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    width: 6px;
+    background: rgba(#101F1C, 0.1);
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(144,147,153,.5);
+    background-clip: padding-box;
+    min-height: 28px;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+    transition: background-color .3s;
+    cursor: pointer;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(144,147,153,.3);
+  }

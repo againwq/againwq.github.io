@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>javascript on Cupper</title>
+    <link>https://example.com/tags/javascript/</link>
+    <description>Recent content in javascript on Cupper</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 03 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://example.com/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>javascript笔记</title>
+      <link>https://example.com/blog_/</link>
+      <pubDate>Fri, 03 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.com/blog_/</guid>
+      <description>介绍 本篇文章用于记录在学习JavaScript过程中遇到的各种知识点&amp;hellip;</description>
+    </item>
+    
+  </channel>
+</rss>

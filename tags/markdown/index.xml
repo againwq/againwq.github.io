@@ -8,15 +8,15 @@
     <language>zh-cn</language>
     <lastBuildDate>Thu, 14 Feb 2019 15:36:09 -0600</lastBuildDate><atom:link href="https://example.com/tags/markdown/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>目录索引</title>
+      <title>markdown基本语法</title>
       <link>https://example.com/cupper-typography/</link>
       <pubDate>Thu, 14 Feb 2019 15:36:09 -0600</pubDate>
       
       <guid>https://example.com/cupper-typography/</guid>
-      <description>Headings ## Heading 2### Heading 3#### Heading 4##### Heading 5###### Heading 6Heading 2 Heading 3 Heading 4 Heading 5 Heading 6 Text *This text will be italic*_This will also be italic_**This text will be bold**__This will also be bold___You **can** combine them_This text will be italic
-This will also be italic
-This text will be bold
-This will also be bold</description>
+      <description>标题 ## Heading 2### Heading 3#### Heading 4##### Heading 5###### Heading 6Heading 2 Heading 3 Heading 4 Heading 5 Heading 6 文本 *这是斜体*_这样也是斜体_**这是粗体**__这样也是粗体___你 **可以** 把他们结合在一起_这是斜体 这样也是斜体
+这是粗体 这样也是粗体
+你 可以 把他们结合在一起
+列表 无序列表 * Item 1* Item 2* Item 2a* Item 2bItem 1 Item 2 Item 2a Item 2b 有序列表 1. Item 11. Item 21.</description>
     </item>
     
   </channel>
