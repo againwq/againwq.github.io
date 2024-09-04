@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>5G知识点补充 | Again&#39;s Blog</title>
+<title>5G知识点补充 | 徐乾朝的博客</title>
 <meta name="keywords" content="大唐杯">
 <meta name="description" content="5G知识点补充 5G系统间消息 系统间消息分类 在5G系统中，系统消息可分为三大类(有的地方是两类, MSI和OSI)：
 Minimum System Information (MSI) &ndash;最小系统消息 包括MIB和SIB1 Remaining Minimum System Information (RMSI) &ndash;剩余最小系统消息 只有SIB1 Other System Information (OSI)&ndash;其他系统消息 SIB2 ~ SIB9 系统消息传输 发送时，MIB通过RRC消息MasterInformationBlock发送 SIB1通过RRC消息SystemInformationBlock1发送 而SIB2~SIB9封装在称为RRC消息SystemInformation中，并且在SystemInformation消息中具体封装哪些SIB是可配置的，不同小区可配置不同的值。 发送时，MSI被周期性地广播，周期固定。(必须通过广播) OSI的发送方式有两种：一，周期广播，二，动态发送， UE开机接入NR小区后，MIB和SIB1是一定会解读的，而SIB2~9的内容是否需要解读以及何时解读取决于小区配置
@@ -59,6 +59,41 @@ Minimum System Information (MSI) &ndash;最小系统消息 包括MIB和SIB1 Rema
     </style>
 </noscript>
 
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
 
 <link rel="icon" href="/avatar.png">
 
@@ -126,7 +161,7 @@ Minimum System Information (MSI) &ndash;最小系统消息 包括MIB和SIB1 Rema
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Again's Blog",
+    "name": "徐乾朝的博客",
     "logo": {
       "@type": "ImageObject",
       "url": "https://againwq.github.io/favicon.ico"
@@ -482,6 +517,11 @@ V2X分为两种, <strong>DSRC和C-V2X</strong></p>
 
   <footer class="post-footer">
 <nav class="paginav">
+  <a class="prev" href="https://againwq.github.io/posts/linux_c/c%E5%AE%9E%E7%8E%B0sinx%E5%B9%B6%E4%BC%98%E5%8C%96/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>C使用泰勒展开实现sinx</span>
+  </a>
   <a class="next" href="https://againwq.github.io/posts/%E5%A4%A7%E5%94%90%E6%9D%AF/5g%E7%89%A9%E7%90%86%E5%B1%82%E8%BF%87%E7%A8%8B/">
     <span class="title">下一页 »</span>
     <br>
@@ -494,7 +534,7 @@ V2X分为两种, <strong>DSRC和C-V2X</strong></p>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://againwq.github.io">Again&#39;s Blog</a></span>
+    <span>&copy; 2024 <a href="https://againwq.github.io">徐乾朝的博客</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

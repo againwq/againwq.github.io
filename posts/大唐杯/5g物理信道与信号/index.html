@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>5G物理信号与信道 | Again&#39;s Blog</title>
+<title>5G物理信号与信道 | 徐乾朝的博客</title>
 <meta name="keywords" content="大唐杯">
 <meta name="description" content="5G物理信道与信号 5G时频域概念 名词解释 CC: 载波, 1个载波可以配置1个或多个BWP BWP: 部分带宽,1个BWP包括n个RB或RBG RBG: 一个RBG等于2,4,8,16个RB,是数据信道PDSCH调度的基本单位 RB: 1个RB等于12个子载波,是数据信道PUSCH调度的基本单位 SCS: 子载波间隔的频率(不是子载波) CCE: 控制信道资源的组成单位,一个CCE=6个REG, 一个PDCCH包含几个CCE, 由聚合等级1,2,4,8,16共5种决定 REG: 控制信道资源分配的基本单位, 频域上1个REG=12个RE,即12个子载波(REG类似于RB), 时域上是1个符号 5G频段介绍 FR1频段: 410MHz &ndash; 7125MHz(Sub6G) FR2频段: 24250MHz &ndash; 52600MHz(毫米波) 与4G相比,取消了1.4M和3MHz的带宽
 注意图中标注的几个频段n28, n41, n79
@@ -61,6 +61,41 @@ DL和UL分别最多可以配置4个专有BWP BWP的带宽必须大于等于SSB,�
     </style>
 </noscript>
 
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
 
 <link rel="icon" href="/avatar.png">
 
@@ -132,7 +167,7 @@ DL和UL分别最多可以配置4个专有BWP BWP的带宽必须大于等于SSB,�
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Again's Blog",
+    "name": "徐乾朝的博客",
     "logo": {
       "@type": "ImageObject",
       "url": "https://againwq.github.io/favicon.ico"
@@ -889,7 +924,7 @@ DL和UL分别最多可以配置4个专有BWP BWP的带宽必须大于等于SSB,�
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://againwq.github.io">Again&#39;s Blog</a></span>
+    <span>&copy; 2024 <a href="https://againwq.github.io">徐乾朝的博客</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

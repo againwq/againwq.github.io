@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>5G信令与协议 | Again&#39;s Blog</title>
+<title>5G信令与协议 | 徐乾朝的博客</title>
 <meta name="keywords" content="大唐杯">
 <meta name="description" content="网络基本架构及接口 5GC（核心网）: AMF（NAS安全,移动性状态管理）,SMF（UE 的ip申请,PDU会话控制）,UPF（PDU管理,移动锚点） NG-RAN（接入网） gNB: 5G基站，由CU&#43;DU构成 Ng接口（接入网与核心网接口）两个层面,用户面与控制面相分离,控制面协议（SCTP, IP, 数据链路层、物理层）, 用户面协议（GTP-U,UDP,IP 数据链路和物理层） Xn接口（gNB,即基站之间的接口）,协议栈Ng相同 F1接口（CU与DU的接口） E1接口（CU与CU的接口）只有控制面协议（SCTP, IP, 数据链路层、物理层） 协议栈见图片
 用户面协议栈 控制面协议栈 5G协议栈 NR无线资源控制层（RRC层） 系统消息广播 RRC连接控制 异系统移动性管理（Inter-RAT） 测量配置和报告 一般性协议错误处理 UE能力转换 NR2层概述 1.SDAP层（服务数据适配层） SDAP子层由RRC配置 SDAO子层将Qos映射到DRBs 在DL中,一个或多个Qos流可能映射到一个DRB 在UL中,一次Qos流仅映射到一个DRB 2.PDCP层（分组数据汇聚层） 数据传输(用户面或控制面) PDCP SN的维护 使用ROHC协议的报头的压缩和解压缩 加密和解密 完整性保护和验证 基于定时器的SDU丢弃 路由重新排序和按顺序交付 重复丢弃 3.RLC层（无线链路控制层） 三种传输模式:TM（透明模式）,UM（非确认模式）,AM（确认模式）
@@ -59,6 +59,41 @@
     </style>
 </noscript>
 
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
 
 <link rel="icon" href="/avatar.png">
 
@@ -126,7 +161,7 @@
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Again's Blog",
+    "name": "徐乾朝的博客",
     "logo": {
       "@type": "ImageObject",
       "url": "https://againwq.github.io/favicon.ico"
@@ -654,7 +689,7 @@ UE先接入（随机接入+RRC连接建立）然后5GC取消注册,释放UE资�
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://againwq.github.io">Again&#39;s Blog</a></span>
+    <span>&copy; 2024 <a href="https://againwq.github.io">徐乾朝的博客</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

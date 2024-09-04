@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>5G网络架构及组网部署 | Again&#39;s Blog</title>
+<title>5G网络架构及组网部署 | 徐乾朝的博客</title>
 <meta name="keywords" content="大唐杯">
 <meta name="description" content="5G网络架构 5G网络架构概述 5G移动通信系统包括5GC(5G核心网)和NG-RAN(无线接入网) ng-eNB: 增强型4G基站,可完成部分5G功能 gNB: 5G基站(对应4G中的eNB) Xn接口: 基站间接口(对应4G中的X2接口),传输数据和信令 NG接口: 接入网网元接入到核心网的接口(对应4G中的S1接口) 5G核心网网元: AMF, UPF, SMF AAU: RRU(射频单元) &#43; 天线 CU和DU: CU是集中单元,DU是分布单元,CU、DU可以集中部署也可以分开部署 5G基站 = CU &#43; DU &#43; AAU,但是CU一般集中部署在靠近5GC的位置,AAU部署在靠近UE端的位置
 核心网和接入网的架构演进 核心网架构演进 接入网架构演进 需要注意5G中接入网各个网元与协议栈对应关系
@@ -61,6 +61,41 @@ PDU会话的建立与删除 UE IP地址的分配 选择控制用户控制面功�
     </style>
 </noscript>
 
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
 
 <link rel="icon" href="/avatar.png">
 
@@ -132,7 +167,7 @@ PDU会话的建立与删除 UE IP地址的分配 选择控制用户控制面功�
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Again's Blog",
+    "name": "徐乾朝的博客",
     "logo": {
       "@type": "ImageObject",
       "url": "https://againwq.github.io/favicon.ico"
@@ -485,7 +520,7 @@ PDU会话的建立与删除 UE IP地址的分配 选择控制用户控制面功�
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://againwq.github.io">Again&#39;s Blog</a></span>
+    <span>&copy; 2024 <a href="https://againwq.github.io">徐乾朝的博客</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

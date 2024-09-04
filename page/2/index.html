@@ -6,10 +6,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Again&#39;s Blog</title>
+<title>徐乾朝的博客</title>
 
 <meta name="description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
-<meta name="author" content="Again">
+<meta name="author" content="徐乾朝">
 <link rel="canonical" href="https://againwq.github.io/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.54840a39f352dd1226fb566b940f4396c306c178f35053fd8eb1adf7a6af72eb.css" integrity="sha256-VIQKOfNS3RIm&#43;1ZrlA9DlsMGwXjzUFP9jrGt96avcus=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://againwq.github.io/favicon.ico">
@@ -59,23 +59,58 @@
     </style>
 </noscript>
 
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
 
 <link rel="icon" href="/avatar.png">
 
-<script defer crossorigin="anonymous" src="/assets/js/extended/custom.js"></script><meta property="og:title" content="Again&#39;s Blog" />
+<script defer crossorigin="anonymous" src="/assets/js/extended/custom.js"></script><meta property="og:title" content="徐乾朝的博客" />
 <meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://againwq.github.io/" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Again&#39;s Blog"/>
+<meta name="twitter:title" content="徐乾朝的博客"/>
 <meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"/>
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Again's Blog",
+  "name": "徐乾朝的博客",
   "url": "https://againwq.github.io",
   "description": "Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod",
   "thumbnailUrl": "https://againwq.github.io/favicon.ico",
@@ -165,6 +200,23 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>5G物理信号与信道
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>5G物理信道与信号 5G时频域概念 名词解释 CC: 载波, 1个载波可以配置1个或多个BWP BWP: 部分带宽,1个BWP包括n个RB或RBG RBG: 一个RBG等于2,4,8,16个RB,是数据信道PDSCH调度的基本单位 RB: 1个RB等于12个子载波,是数据信道PUSCH调度的基本单位 SCS: 子载波间隔的频率(不是子载波) CCE: 控制信道资源的组成单位,一个CCE=6个REG, 一个PDCCH包含几个CCE, 由聚合等级1,2,4,8,16共5种决定 REG: 控制信道资源分配的基本单位, 频域上1个REG=12个RE,即12个子载波(REG类似于RB), 时域上是1个符号 5G频段介绍 FR1频段: 410MHz – 7125MHz(Sub6G) FR2频段: 24250MHz – 52600MHz(毫米波) 与4G相比,取消了1.4M和3MHz的带宽
+注意图中标注的几个频段n28, n41, n79
+5G信道带宽的结构 保护带宽 传输带宽 保护带宽 最大传输带宽 注: FR1和FR2都支持的传输带宽的SCS为 60KHz
+最小保护带宽 双工方式 TDD: 时分双工, 上下行频段相同 FDD: 频分双工, 上下行频段不同 SDL: 补充下行频段, 只有下行频段 SUL: 补充上行频段, 只有上行频段 SDL和SUL频段只能做下行或者上行，因此不能独立工作，仅作为辅助频段，这些频段的频率较低，覆盖性能较好，可用来弥补上下行覆盖的不足。
+工信部分配频段 5G频域资源 BWP 全称Bandwidth Part, 是整个带宽上的一个子集,每个BWP的大小,以及使用的SCS和CP(循环前缀)都可以灵活配置
+DL和UL分别最多可以配置4个专有BWP BWP的带宽必须大于等于SSB,但是BWP中不一定包含SSB 对同一个UE来说,DL或UL同一时刻只能有一个BWP处于激活状态 BWP分为四类,分别是初始BWP, 专用BWP, 激活BWP(UE指定), 默认BWP(UE指定)...</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-04-16 00:00:00 +0000 UTC'>2024-04-16</span>&nbsp;·&nbsp;xqc</footer>
+  <a class="entry-link" aria-label="post link to 5G物理信号与信道" href="https://againwq.github.io/posts/%E5%A4%A7%E5%94%90%E6%9D%AF/5g%E7%89%A9%E7%90%86%E4%BF%A1%E9%81%93%E4%B8%8E%E4%BF%A1%E5%8F%B7/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>5G信令与协议
     </h2>
   </header>
@@ -187,7 +239,7 @@
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://againwq.github.io">Again&#39;s Blog</a></span>
+    <span>&copy; 2024 <a href="https://againwq.github.io">徐乾朝的博客</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

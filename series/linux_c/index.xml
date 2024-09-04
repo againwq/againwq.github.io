@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Linux_C on 徐乾朝的博客</title>
+    <link>https://againwq.github.io/series/linux_c/</link>
+    <description>Recent content in Linux_C on 徐乾朝的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Wed, 04 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://againwq.github.io/series/linux_c/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C使用泰勒展开实现sinx</title>
+      <link>https://againwq.github.io/posts/linux_c/c%E5%AE%9E%E7%8E%B0sinx%E5%B9%B6%E4%BC%98%E5%8C%96/</link>
+      <pubDate>Wed, 04 Sep 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://againwq.github.io/posts/linux_c/c%E5%AE%9E%E7%8E%B0sinx%E5%B9%B6%E4%BC%98%E5%8C%96/</guid>
+      <description>一、sinx泰勒展开的C实现 1.sinx泰勒展开公式 sinx的泰勒展开如下： $$ sinx = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + &amp;hellip; + \frac{(-1)^n}{(2n + 1)!}x^{2n+1} $$
+其中n从0开始计算，我采用的公式形态上是x=0处的泰勒展开。实际上我们可以把x写成$x = x + x_0$来实现$x=x_0$处的展开
+2.C实现sinx泰勒展开 我们通过控制精度来控制展开项数，并且我们只考虑$0-2\pi$的范围，归一化处理我们之后再详细考虑，通过泰勒展开公式我们的C程序如下，
+#include &amp;lt;math.h&amp;gt; #define degree 1e-2 float fun_sin(float x) { float res, term; int i; int factor; // 阶乘 term = x; // 每一项的结果 factor = 1; res = term; for (i = 1; fabs(term) &amp;gt; degree; i++) { factor *= (2 * i) * (2 * i + 1); term = pow(-1, i) * pow(x, 2 * i + 1) / factor; res += term; } return res; } 上面的代码基本是严格按照公式计算的，可惜的是它并不能正常工作，这涉及到计算阶乘时整数溢出的问题。当输入比较小，比如0.</description>
+    </item>
+    
+  </channel>
+</rss>
