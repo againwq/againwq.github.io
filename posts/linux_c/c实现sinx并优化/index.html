@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>C使用泰勒展开实现sinx | 徐乾朝的博客</title>
+<title>C语言使用泰勒展开实现sinx并优化 | 徐乾朝的博客</title>
 <meta name="keywords" content="C, 泰勒展开, 浮点数, 优化">
 <meta name="description" content="一、sinx泰勒展开的C实现 1.sinx泰勒展开公式 sinx的泰勒展开如下： $$ sinx = x - \frac{x^3}{3!} &#43; \frac{x^5}{5!} - \frac{x^7}{7!} &#43; &hellip; &#43; \frac{(-1)^n}{(2n &#43; 1)!}x^{2n&#43;1} $$
 其中n从0开始计算，我采用的公式形态上是x=0处的泰勒展开。实际上我们可以把x写成$x = x &#43; x_0$来实现$x=x_0$处的展开
@@ -97,7 +97,7 @@ code.has-jax {
 
 <link rel="icon" href="/avatar.png">
 
-<script defer crossorigin="anonymous" src="/assets/js/extended/custom.js"></script><meta property="og:title" content="C使用泰勒展开实现sinx" />
+<script defer crossorigin="anonymous" src="/assets/js/extended/custom.js"></script><meta property="og:title" content="C语言使用泰勒展开实现sinx并优化" />
 <meta property="og:description" content="一、sinx泰勒展开的C实现 1.sinx泰勒展开公式 sinx的泰勒展开如下： $$ sinx = x - \frac{x^3}{3!} &#43; \frac{x^5}{5!} - \frac{x^7}{7!} &#43; &hellip; &#43; \frac{(-1)^n}{(2n &#43; 1)!}x^{2n&#43;1} $$
 其中n从0开始计算，我采用的公式形态上是x=0处的泰勒展开。实际上我们可以把x写成$x = x &#43; x_0$来实现$x=x_0$处的展开
 2.C实现sinx泰勒展开 我们通过控制精度来控制展开项数，并且我们只考虑$0-2\pi$的范围，归一化处理我们之后再详细考虑，通过泰勒展开公式我们的C程序如下，
@@ -109,7 +109,7 @@ code.has-jax {
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="C使用泰勒展开实现sinx"/>
+<meta name="twitter:title" content="C语言使用泰勒展开实现sinx并优化"/>
 <meta name="twitter:description" content="一、sinx泰勒展开的C实现 1.sinx泰勒展开公式 sinx的泰勒展开如下： $$ sinx = x - \frac{x^3}{3!} &#43; \frac{x^5}{5!} - \frac{x^7}{7!} &#43; &hellip; &#43; \frac{(-1)^n}{(2n &#43; 1)!}x^{2n&#43;1} $$
 其中n从0开始计算，我采用的公式形态上是x=0处的泰勒展开。实际上我们可以把x写成$x = x &#43; x_0$来实现$x=x_0$处的展开
 2.C实现sinx泰勒展开 我们通过控制精度来控制展开项数，并且我们只考虑$0-2\pi$的范围，归一化处理我们之后再详细考虑，通过泰勒展开公式我们的C程序如下，
@@ -136,7 +136,7 @@ code.has-jax {
     {
       "@type": "ListItem",
       "position":  4 ,
-      "name": "C使用泰勒展开实现sinx",
+      "name": "C语言使用泰勒展开实现sinx并优化",
       "item": "https://againwq.github.io/posts/linux_c/c%E5%AE%9E%E7%8E%B0sinx%E5%B9%B6%E4%BC%98%E5%8C%96/"
     }
   ]
@@ -146,14 +146,14 @@ code.has-jax {
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "C使用泰勒展开实现sinx",
-  "name": "C使用泰勒展开实现sinx",
+  "headline": "C语言使用泰勒展开实现sinx并优化",
+  "name": "C语言使用泰勒展开实现sinx并优化",
   "description": "一、sinx泰勒展开的C实现 1.sinx泰勒展开公式 sinx的泰勒展开如下： $$ sinx = x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\frac{x^7}{7!} + \u0026hellip; + \\frac{(-1)^n}{(2n + 1)!}x^{2n+1} $$\n其中n从0开始计算，我采用的公式形态上是x=0处的泰勒展开。实际上我们可以把x写成$x = x + x_0$来实现$x=x_0$处的展开\n2.C实现sinx泰勒展开 我们通过控制精度来控制展开项数，并且我们只考虑$0-2\\pi$的范围，归一化处理我们之后再详细考虑，通过泰勒展开公式我们的C程序如下，\n#include \u0026lt;math.h\u0026gt; #define degree 1e-2 float fun_sin(float x) { float res, term; int i; int factor; // 阶乘 term = x; // 每一项的结果 factor = 1; res = term; for (i = 1; fabs(term) \u0026gt; degree; i++) { factor *= (2 * i) * (2 * i + 1); term = pow(-1, i) * pow(x, 2 * i + 1) / factor; res += term; } return res; } 上面的代码基本是严格按照公式计算的，可惜的是它并不能正常工作，这涉及到计算阶乘时整数溢出的问题。当输入比较小，比如0.",
   "keywords": [
     "C", "泰勒展开", "浮点数", "优化"
   ],
-  "articleBody": "一、sinx泰勒展开的C实现 1.sinx泰勒展开公式 sinx的泰勒展开如下： $$ sinx = x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\frac{x^7}{7!} + … + \\frac{(-1)^n}{(2n + 1)!}x^{2n+1} $$\n其中n从0开始计算，我采用的公式形态上是x=0处的泰勒展开。实际上我们可以把x写成$x = x + x_0$来实现$x=x_0$处的展开\n2.C实现sinx泰勒展开 我们通过控制精度来控制展开项数，并且我们只考虑$0-2\\pi$的范围，归一化处理我们之后再详细考虑，通过泰勒展开公式我们的C程序如下，\n#include #define degree 1e-2 float fun_sin(float x) { float res, term; int i; int factor; // 阶乘 term = x; // 每一项的结果 factor = 1; res = term; for (i = 1; fabs(term) \u003e degree; i++) { factor *= (2 * i) * (2 * i + 1); term = pow(-1, i) * pow(x, 2 * i + 1) / factor; res += term; } return res; } 上面的代码基本是严格按照公式计算的，可惜的是它并不能正常工作，这涉及到计算阶乘时整数溢出的问题。当输入比较小，比如0.2，那么大概在第二项就达到了我们设定的精度0.01了，此时factor为6，但是如果输入为6.23左右时，我们要计算10项以上才能达到我们设定的精度，第10项需要计算21的阶乘，即便使用64位无符号整型存储也不够，因此我们需要对其进行一定的优化\n二、sinx泰勒展开优化 1.通过固定计算的阶数来保证不溢出 很容易想到的一点就是我们可以通过固定展开的项数来保证计算过程不会溢出，比如我们固定每次展开项数为7，C程序如下\n#include #define TIMES 7 float fun_sin(float x) { float res, term; int i; unsigned long factor; factor = 1; res = x; for (i = 1; i \u003c TIMES; i++) { factor *= (2 * i) * (2 * i + 1); res += pow(-1, i) * pow(x, 2 * i + 1) / factor; } return res; } 2.从公式出发 观察sinx的泰勒展开我们可以得到如下规律：\n记第i项展开式为 $a_i = \\frac{(-1)^i}{(2i + 1)!}x^{2i+1}$ 则有 $a_i = a_{i-1} \\cdot \\frac{-x^2}{(2i)\\cdot(2i+1)}$ 我们可以看出相邻两项相差一个乘积因子$\\frac{-x^2}{(2i)\\cdot(2i+1)}$，而且这个因子中不会产生太大的数据导致数据溢出。这样我们可以保留通过精度控制展开项数的方法，而且不会产生数据溢出。实现的C程序如下：\n#include #define pi 3.14159265 #define degree 1e-2\t// ̩精度设置 const float factor_diff_mem[10] = // 乘积因子的分母部分 { 1.0, 1.0 / 6, 1.0 / 20, 1.0 / 42, 1.0 / 72, 1.0 / 110, 1.0 / 156, 1.0 / 210, 1.0 / 272, 1.0 / 342 }; float fun_sin(float x) { float sum; float diff; int i; float term; sum = x; term = x; // 展开的每一项 diff = -1 * x * x; //乘积因子的分子部分 for (i = 1; fabs(term) \u003e degree; i++) { term *= diff * factor_diff_mem[i]; sum += term; } return sum; } 这里我们也做了一些优化，我们不再在for循环中去计算因子的分母部分，而是在编译阶段直接计算出，程序运行时直接查表即可，这也是经典的空间换时间的优化方式。可以看到现在这个程序已经没有指数和阶乘这种费时又可能导致溢出的计算了\n三、三种方法时间比较 1.测试环境和代码 接下来我们将这两种方法和C标准库下的sinx进行时间上的比较，我采用的平台是x86_64，Debian 12系统，gcc12.2，测试代码如下：\nint get_us_time(){ struct timeval tv; gettimeofday(\u0026tv, NULL); return tv.tv_usec; } int sinx_time_test(float (*fun_sin)(float), float *data, int n, int count) { int start, end; float x; int i, j; start = get_us_time(); for (j = 0; j \u003c count; j++) // 周期数量 { for (i = 0; i \u003c= n; i++) { x = 2 * pi * i / n; // 0-2pi取n个点 data[i] = fun_sin(x); // printf(\"%f\\n\", data[i]); } } end = get_us_time(); return end - start; } 这里采用两层循环是为了更方便看到差距以外，还要保证一个周期内不要取太多点，导致输入的x精度过高，这里我们不对精度做太高要求,\n2.程序运行时间对比 三种方法程序运行时间如下：\nC standard Fixed degree Fixed items 184 us 266 us 1701 us 多次运行数值上的结果可能不一样，但是三者的关系基本不变，标准库的sinx最快，其次是我们优化后的固定精度的实现，最后是固定周期的实现。我们可以看到优化后的固定精度的实现和C标准库执行时间差不多，只有几十us的差距，但是固定周期的实现方法运行的时间却是其他两种方法的10倍，可见其效率之低。\n3.程序运行精度对比 我们借助gnuplot去绘制这三种方法的sinx曲线去大概对比精度，如图所示： 可以看到，当x逐渐变大时，固定周期的方法的精度以及出现非常明显的误差了，而我们优化后的固定精度的方法几乎是与标准库的实现完全重叠，甚至我们可以尝试继续调小精度来提升程序运行速度\n四、输入归一化处理 前面我们以及实现了速度接近标准库实现的泰勒展开，但是范围被限定在$(-2\\pi, 2\\pi)$之间，其实我们也可以输入超过这个范围的数据，但是随着输入的绝对值的变大，为了保证相同的精度，泰勒展开项数会逐渐增多，程序运行速度会越来越慢，最后很有有可能导致精度再次溢出。我们不希望不同的输入对程序的运行状态有太大的影响。因此，我们需要对输入进行归一化处理\n1.归一化操作 归一化操作其实很简单，借助sinx的周期性，在本程序中归一化操作如下\nconst float T = 2 * pi; // sinx周期为2pi float fun_sin(float x){ ... int n = (int)(x / T); // 计算周期数量 x -= n * T; // sin(x) = sinx(x - 2n*pi) ... } 2.对除法的优化 在某些平台上，比如DSP芯片中，我们不希望程序中出现除法操作，因为除法是一个非常耗时的操作。在很多DSP芯片中加法和乘法是基本计算操作，cpu只需要一个指令就能完成，但是除法是非常耗时的，所以我们可以尝试改写一下，将其变成乘法的形式\nconst float T = 2 * pi const float f = 1 / T // 编译阶段执行 float fun_sin(float x){ ... x -= T * (int)(x * f) ... } 我们把涉及到除法的部分放到编译阶段执行，这样可以优化在某些不支持快速计算除法的平台上的运行速度\n3.对浮点数截断的操作 这个优化也是在DSP芯片的场景中，我们使用int类型强制转换来对浮点数进行截断操作，这句话看起来很简单，实际上是一个非常复杂的操作，因为浮点数的存储方式不像整型数据那样01排列然后根据二进制计算即可，浮点数有其自己的存储方式。你可以很容易通过整型数据的二进制去计算10进制，但是浮点数的二进制却不是那么容易计算。IEEE754标准就定义了浮点数在二进制中的存储格式，这里不做过多介绍。\n总之知道存储格式后我们可以通过位运算去进行浮点数截断的操作，我之前在CCSV5.5仿真TMS320VC5509A芯片的平台上测试过，这个方法确实可以提升程序运行速度，甚至比库函数还快，但是在x86平台上几乎没有多少提升。（代码是参考网上一篇文章的，但是我忘记链接了…）\nunion FloatBit { float f; int f_b; } ret, bias; int Float2Int(float f) // 快速转换浮点数为整数 { ret.f = f; bias.f_b = (23l + 127l) \u003c\u003c 23; if (f \u003c 0.0f) { bias.f_b = ((23l + 127l) \u003c\u003c 23) + (1l \u003c\u003c 22); } ret.f += bias.f; ret.f_b -= bias.f_b; return ret.f_b; } 需要注意你的平台上int位数应该和float一样都是32位，如果int是是16位应该换成long或者其他32位的整型类型。\n最终我们优化完的程序如下：\n#include #define pi 3.14159265 #define degree 1e-2\t// ̩精度设置 const float factor_diff_mem[10] = // 泰勒展开因子 { 1.0, 1.0 / 6, 1.0 / 20, 1.0 / 42, 1.0 / 72, 1.0 / 110, 1.0 / 156, 1.0 / 210, 1.0 / 272, 1.0 / 342}; const float T = 2 * pi; const float f = 1 / (2 * pi); union FloatBit { float f; int f_b; } ret, bias; int Float2Int(float f) // 快速转换浮点数为整数 { ret.f = f; bias.f_b = (23l + 127l) \u003c\u003c 23; if (f \u003c 0.0f) { bias.f_b = ((23l + 127l) \u003c\u003c 23) + (1l \u003c\u003c 22); } ret.f += bias.f; ret.f_b -= bias.f_b; return ret.f_b; } float fun_sin(float x) { float sum; float diff; int i; float term; x -= T * Float2Int(x * f); sum = x; term = x; diff = -1 * x * x; for (i = 1; fabs(term) \u003e degree; i++) { term *= diff * factor_diff_mem[i]; sum += term; } return sum; } ",
-  "wordCount" : "666",
+  "articleBody": "一、sinx泰勒展开的C实现 1.sinx泰勒展开公式 sinx的泰勒展开如下： $$ sinx = x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\frac{x^7}{7!} + … + \\frac{(-1)^n}{(2n + 1)!}x^{2n+1} $$\n其中n从0开始计算，我采用的公式形态上是x=0处的泰勒展开。实际上我们可以把x写成$x = x + x_0$来实现$x=x_0$处的展开\n2.C实现sinx泰勒展开 我们通过控制精度来控制展开项数，并且我们只考虑$0-2\\pi$的范围，归一化处理我们之后再详细考虑，通过泰勒展开公式我们的C程序如下，\n#include #define degree 1e-2 float fun_sin(float x) { float res, term; int i; int factor; // 阶乘 term = x; // 每一项的结果 factor = 1; res = term; for (i = 1; fabs(term) \u003e degree; i++) { factor *= (2 * i) * (2 * i + 1); term = pow(-1, i) * pow(x, 2 * i + 1) / factor; res += term; } return res; } 上面的代码基本是严格按照公式计算的，可惜的是它并不能正常工作，这涉及到计算阶乘时整数溢出的问题。当输入比较小，比如0.2，那么大概在第二项就达到了我们设定的精度0.01了，此时factor为6，但是如果输入为6.23左右时，我们要计算10项以上才能达到我们设定的精度，第10项需要计算21的阶乘，即便使用64位无符号整型存储也不够，因此我们需要对其进行一定的优化\n二、sinx泰勒展开优化 1.通过固定计算的阶数来保证不溢出 很容易想到的一点就是我们可以通过固定展开的项数来保证计算过程不会溢出，比如我们固定每次展开项数为7，C程序如下\n#include #define TIMES 7 float fun_sin(float x) { float res, term; int i; unsigned long factor; factor = 1; res = x; for (i = 1; i \u003c TIMES; i++) { factor *= (2 * i) * (2 * i + 1); res += pow(-1, i) * pow(x, 2 * i + 1) / factor; } return res; } 经测试，该程序在$0-2\\pi$内不会出现精度溢出的问题\n2.从公式出发改变实现方法 观察sinx的泰勒展开我们可以得到如下规律：\n记第i项展开式为 $a_i = \\frac{(-1)^i}{(2i + 1)!}x^{2i+1}$ 则有 $a_i = a_{i-1} \\cdot \\frac{-x^2}{(2i)\\cdot(2i+1)}$ 我们可以看出相邻两项相差一个乘积因子$\\frac{-x^2}{(2i)\\cdot(2i+1)}$，而且这个因子中不会产生太大的数据导致数据溢出。这样我们可以保留通过精度控制展开项数的方法，而且不会产生数据溢出。实现的C程序如下：\n#include #define pi 3.14159265 #define degree 1e-2\t// ̩精度设置 const float factor_diff_mem[10] = // 乘积因子的分母部分 { 1.0, 1.0 / 6, 1.0 / 20, 1.0 / 42, 1.0 / 72, 1.0 / 110, 1.0 / 156, 1.0 / 210, 1.0 / 272, 1.0 / 342 }; float fun_sin(float x) { float sum; float diff; int i; float term; sum = x; term = x; // 展开的每一项 diff = -1 * x * x; //乘积因子的分子部分 for (i = 1; fabs(term) \u003e degree; i++) { term *= diff * factor_diff_mem[i]; sum += term; } return sum; } 这里我们也做了一些优化，我们不再在for循环中去计算因子的分母部分，而是在编译阶段直接计算出，程序运行时直接查表即可，这也是经典的空间换时间的优化方式。可以看到现在这个程序已经没有指数和阶乘这种费时又可能导致溢出的计算了\n三、三种方法时间比较 1.测试环境和代码 接下来我们将这两种方法和C标准库下的sinx进行时间上的比较，我采用的平台是x86_64，Debian 12系统，gcc12.2，测试代码如下：\nint get_us_time(){ struct timeval tv; gettimeofday(\u0026tv, NULL); return tv.tv_usec; } int sinx_time_test(float (*fun_sin)(float), float *data, int n, int count) { int start, end; float x; int i, j; start = get_us_time(); for (j = 0; j \u003c count; j++) // 周期数量 { for (i = 0; i \u003c= n; i++) { x = 2 * pi * i / n; // 0-2pi取n个点 data[i] = fun_sin(x); // printf(\"%f\\n\", data[i]); } } end = get_us_time(); return end - start; } 这里采用两层循环是为了更方便看到差距以外，还要保证一个周期内不要取太多点，导致输入的x精度过高，这里我们不对精度做太高要求,\n2.程序运行时间对比 三种方法程序运行时间如下：\nC standard Fixed degree Fixed items 184 us 266 us 1701 us 多次运行数值上的结果可能不一样，但是三者的关系基本不变，标准库的sinx最快，其次是我们优化后的固定精度的实现，最后是固定周期的实现。我们可以看到优化后的固定精度的实现和C标准库执行时间差不多，只有几十us的差距，但是固定周期的实现方法运行的时间却是其他两种方法的10倍，可见其效率之低。\n3.程序运行精度对比 我们借助gnuplot去绘制这三种方法的sinx曲线去大概对比精度，如图所示： 可以看到，当x逐渐变大时，固定周期的方法的精度以及出现非常明显的误差了，而我们优化后的固定精度的方法几乎是与标准库的实现完全重叠，甚至我们可以尝试继续调小精度来提升程序运行速度\n四、输入归一化处理 前面我们已经实现了速度接近标准库实现的泰勒展开，但是范围被限定在$(-2\\pi, 2\\pi)$之间，其实我们也可以输入超过这个范围的数据，但是随着输入的绝对值的变大，为了保证相同的精度，泰勒展开项数会逐渐增多，程序运行速度会越来越慢，最后很有有可能导致精度再次溢出。我们不希望不同的输入对程序的运行状态有太大的影响。因此，我们需要对输入进行归一化处理\n1.归一化操作 归一化操作其实很简单，借助sinx的周期性，在本程序中归一化操作如下\nconst float T = 2 * pi; // sinx周期为2pi float fun_sin(float x){ ... int n = (int)(x / T); // 计算周期数量 x -= n * T; // sin(x) = sinx(x - 2n*pi) ... } 2.对除法的优化 在某些平台上，比如DSP芯片中，我们不希望程序中出现除法操作，因为除法是一个非常耗时的操作。在很多DSP芯片中加法和乘法是基本计算操作，cpu只需要一个指令就能完成，但是除法是非常耗时的，所以我们可以尝试改写一下，将其变成乘法的形式\nconst float T = 2 * pi const float f = 1 / T // 编译阶段执行 float fun_sin(float x){ ... x -= T * (int)(x * f) ... } 我们把涉及到除法的部分放到编译阶段执行，这样可以优化在某些不支持快速计算除法的平台上的运行速度\n3.对浮点数截断的操作 这个优化也是在DSP芯片的场景中，我们使用int类型强制转换来对浮点数进行截断操作，这句话看起来很简单，实际上是一个非常复杂的操作，因为浮点数的存储方式不像整型数据那样01排列然后根据二进制计算即可，浮点数有其自己的存储方式。你可以很容易通过整型数据的二进制去计算10进制，但是浮点数的二进制却不是那么容易计算。IEEE754标准就定义了浮点数在二进制中的存储格式，这里不做过多介绍。 总之知道存储格式后我们可以通过位运算去进行浮点数截断的操作，我之前在CCSV5.5仿真TMS320VC5509A芯片的平台上测试过，这个方法确实可以提升程序运行速度，甚至比库函数还快，但是在x86平台上几乎没有多少提升。（代码是参考网上一篇文章的，但是我忘记链接了…）\nunion FloatBit { float f; int f_b; } ret, bias; int Float2Int(float f) // 快速转换浮点数为整数 { ret.f = f; bias.f_b = (23l + 127l) \u003c\u003c 23; if (f \u003c 0.0f) { bias.f_b = ((23l + 127l) \u003c\u003c 23) + (1l \u003c\u003c 22); } ret.f += bias.f; ret.f_b -= bias.f_b; return ret.f_b; } 需要注意你的平台上int位数应该和float一样都是32位，如果int是16位应该换成long或者其他32位的整型类型。\n五、最终程序实现 最终我们优化完的程序如下：\n#include #define pi 3.14159265 #define degree 1e-2\t// ̩精度设置 const float factor_diff_mem[10] = // 泰勒展开因子 { 1.0, 1.0 / 6, 1.0 / 20, 1.0 / 42, 1.0 / 72, 1.0 / 110, 1.0 / 156, 1.0 / 210, 1.0 / 272, 1.0 / 342}; const float T = 2 * pi; const float f = 1 / (2 * pi); union FloatBit { float f; int f_b; } ret, bias; int Float2Int(float f) // 快速转换浮点数为整数 { ret.f = f; bias.f_b = (23l + 127l) \u003c\u003c 23; if (f \u003c 0.0f) { bias.f_b = ((23l + 127l) \u003c\u003c 23) + (1l \u003c\u003c 22); } ret.f += bias.f; ret.f_b -= bias.f_b; return ret.f_b; } float fun_sin(float x) { float sum; float diff; int i; float term; x -= T * Float2Int(x * f); sum = x; term = x; diff = -1 * x * x; for (i = 1; fabs(term) \u003e degree; i++) { term *= diff * factor_diff_mem[i]; sum += term; } return sum; } 我们尝试将输入$x$改成$x+b,b=100i, -100 \u003c i \u003c 100$,去将这个程序与C标准库程序对比，如图所示： 可以看到，两种方法在运行时间和稳定性上差距很小，我们的程序达到了我们预期的性能了\n",
+  "wordCount" : "675",
   "inLanguage": "zh",
   "datePublished": "2024-09-04T00:00:00Z",
   "dateModified": "2024-09-04T00:00:00Z",
@@ -258,7 +258,7 @@ code.has-jax {
   <header class="post-header">
     <div class="breadcrumbs"><a href="https://againwq.github.io">主页</a>&nbsp;»&nbsp;<a href="https://againwq.github.io/posts/">系列</a>&nbsp;»&nbsp;<a href="https://againwq.github.io/posts/linux_c/">Linux C</a></div>
     <h1 class="post-title">
-      C使用泰勒展开实现sinx
+      C语言使用泰勒展开实现sinx并优化
     </h1>
     <div class="post-meta"><span title='2024-09-04 00:00:00 +0000 UTC'>2024-09-04</span>&nbsp;·&nbsp;xqc
 
@@ -292,7 +292,7 @@ code.has-jax {
                 <li>
                     <a href="#1%e9%80%9a%e8%bf%87%e5%9b%ba%e5%ae%9a%e8%ae%a1%e7%ae%97%e7%9a%84%e9%98%b6%e6%95%b0%e6%9d%a5%e4%bf%9d%e8%af%81%e4%b8%8d%e6%ba%a2%e5%87%ba" aria-label="1.通过固定计算的阶数来保证不溢出">1.通过固定计算的阶数来保证不溢出</a></li>
                 <li>
-                    <a href="#2%e4%bb%8e%e5%85%ac%e5%bc%8f%e5%87%ba%e5%8f%91" aria-label="2.从公式出发">2.从公式出发</a></li></ul>
+                    <a href="#2%e4%bb%8e%e5%85%ac%e5%bc%8f%e5%87%ba%e5%8f%91%e6%94%b9%e5%8f%98%e5%ae%9e%e7%8e%b0%e6%96%b9%e6%b3%95" aria-label="2.从公式出发改变实现方法">2.从公式出发改变实现方法</a></li></ul>
                 </li>
                 <li>
                     <a href="#%e4%b8%89%e4%b8%89%e7%a7%8d%e6%96%b9%e6%b3%95%e6%97%b6%e9%97%b4%e6%af%94%e8%be%83" aria-label="三、三种方法时间比较">三、三种方法时间比较</a><ul>
@@ -312,10 +312,11 @@ code.has-jax {
                 <li>
                     <a href="#2%e5%af%b9%e9%99%a4%e6%b3%95%e7%9a%84%e4%bc%98%e5%8c%96" aria-label="2.对除法的优化">2.对除法的优化</a></li>
                 <li>
-                    <a href="#3%e5%af%b9%e6%b5%ae%e7%82%b9%e6%95%b0%e6%88%aa%e6%96%ad%e7%9a%84%e6%93%8d%e4%bd%9c" aria-label="3.对浮点数截断的操作">3.对浮点数截断的操作</a>
+                    <a href="#3%e5%af%b9%e6%b5%ae%e7%82%b9%e6%95%b0%e6%88%aa%e6%96%ad%e7%9a%84%e6%93%8d%e4%bd%9c" aria-label="3.对浮点数截断的操作">3.对浮点数截断的操作</a></li></ul>
                 </li>
-            </ul>
-            </li>
+                <li>
+                    <a href="#%e4%ba%94%e6%9c%80%e7%bb%88%e7%a8%8b%e5%ba%8f%e5%ae%9e%e7%8e%b0" aria-label="五、最终程序实现">五、最终程序实现</a>
+                </li>
             </ul>
         </div>
     </details>
@@ -351,7 +352,7 @@ $$</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">res</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>   上面的代码基本是严格按照公式计算的，可惜的是它并不能正常工作，这涉及到<strong>计算阶乘时整数溢出</strong>的问题。当输入比较小，比如0.2，那么大概在第二项就达到了我们设定的精度0.01了，此时factor为6，但是如果输入为6.23左右时，我们要计算10项以上才能达到我们设定的精度，第10项需要计算21的阶乘，即便使用64位无符号整型存储也不够，因此我们需要对其进行一定的优化</p>
+</span></span></code></pre></div><p>   上面的代码基本是严格按照公式计算的，可惜的是它并不能正常工作，这涉及到<strong>计算阶乘时整数溢出</strong>的问题。当输入比较小，比如0.2，那么大概在第二项就达到了我们设定的精度0.01了，此时factor为6，但是如果输入为6.23左右时，我们要计算10项以上才能达到我们设定的精度，第10项需要计算21的阶乘，即便使用<strong>64位无符号整型存储</strong>也不够，因此我们需要对其进行一定的优化</p>
 <h2 id="二sinx泰勒展开优化">二、sinx泰勒展开优化<a hidden class="anchor" aria-hidden="true" href="#二sinx泰勒展开优化">#</a></h2>
 <h3 id="1通过固定计算的阶数来保证不溢出">1.通过固定计算的阶数来保证不溢出<a hidden class="anchor" aria-hidden="true" href="#1通过固定计算的阶数来保证不溢出">#</a></h3>
 <p>   很容易想到的一点就是我们可以通过固定展开的项数来保证计算过程不会溢出，比如我们固定每次展开项数为7，C程序如下</p>
@@ -374,7 +375,8 @@ $$</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">res</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="2从公式出发">2.从公式出发<a hidden class="anchor" aria-hidden="true" href="#2从公式出发">#</a></h3>
+</span></span></code></pre></div><p>  经测试，该程序在$0-2\pi$内不会出现精度溢出的问题</p>
+<h3 id="2从公式出发改变实现方法">2.从公式出发改变实现方法<a hidden class="anchor" aria-hidden="true" href="#2从公式出发改变实现方法">#</a></h3>
 <p>   观察sinx的泰勒展开我们可以得到如下规律：</p></p>
 <ul>
 <li>记第i项展开式为 $a_i = \frac{(-1)^i}{(2i + 1)!}x^{2i+1}$</li>
@@ -408,7 +410,7 @@ $$</p>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>   这里我们也做了一些优化，我们不再在for循环中去计算因子的分母部分，而是在编译阶段直接计算出，程序运行时直接查表即可，这也是经典的<strong>空间换时间</strong>的优化方式。可以看到现在这个程序已经没有指数和阶乘这种费时又可能导致溢出的计算了</p>
+</span></span></code></pre></div><p>   这里我们也做了一些优化，我们不再在for循环中去计算因子的分母部分，而是在编译阶段直接计算出，<strong>程序运行时直接查表即可</strong>，这也是经典的<strong>空间换时间</strong>的优化方式。可以看到现在这个程序已经没有指数和阶乘这种费时又可能导致溢出的计算了</p>
 <h2 id="三三种方法时间比较">三、三种方法时间比较<a hidden class="anchor" aria-hidden="true" href="#三三种方法时间比较">#</a></h2>
 <h3 id="1测试环境和代码">1.测试环境和代码<a hidden class="anchor" aria-hidden="true" href="#1测试环境和代码">#</a></h3>
 <p>   接下来我们将这两种方法和C标准库下的sinx进行时间上的比较，我采用的平台是<strong>x86_64，Debian 12系统，gcc12.2</strong>，测试代码如下：</p>
@@ -466,7 +468,7 @@ $$</p>
 
    可以看到，<strong>当x逐渐变大时，固定周期的方法的精度以及出现非常明显的误差了，而我们优化后的固定精度的方法几乎是与标准库的实现完全重叠，甚至我们可以尝试继续调小精度来提升程序运行速度</strong></p>
 <h2 id="四输入归一化处理">四、输入归一化处理<a hidden class="anchor" aria-hidden="true" href="#四输入归一化处理">#</a></h2>
-<p>   前面我们以及实现了速度接近标准库实现的泰勒展开，但是范围被限定在$(-2\pi, 2\pi)$之间，其实我们也可以输入超过这个范围的数据，但是随着输入的绝对值的变大，为了保证相同的精度，泰勒展开项数会逐渐增多，程序运行速度会越来越慢，最后很有有可能导致精度再次溢出。<strong>我们不希望不同的输入对程序的运行状态有太大的影响</strong>。因此，我们需要对输入进行归一化处理</p>
+<p>   前面我们已经实现了速度接近标准库实现的泰勒展开，但是范围被限定在$(-2\pi, 2\pi)$之间，其实我们也可以输入超过这个范围的数据，但是随着输入的绝对值的变大，为了保证相同的精度，泰勒展开项数会逐渐增多，程序运行速度会越来越慢，最后很有有可能导致精度再次溢出。<strong>我们不希望不同的输入对程序的运行状态有太大的影响</strong>。因此，我们需要对输入进行归一化处理</p>
 <h3 id="1归一化操作">1.归一化操作<a hidden class="anchor" aria-hidden="true" href="#1归一化操作">#</a></h3>
 <p>   归一化操作其实很简单，借助sinx的周期性，在本程序中归一化操作如下</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">float</span> <span class="n">T</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">;</span>  <span class="c1">// sinx周期为2pi
@@ -488,7 +490,7 @@ $$</p>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>  我们把涉及到除法的部分放到编译阶段执行，这样可以优化在某些不支持快速计算除法的平台上的运行速度</p>
 <h3 id="3对浮点数截断的操作">3.对浮点数截断的操作<a hidden class="anchor" aria-hidden="true" href="#3对浮点数截断的操作">#</a></h3>
-<p>  这个优化也是在DSP芯片的场景中，我们使用int类型强制转换来对浮点数进行截断操作，这句话看起来很简单，实际上是一个非常复杂的操作，因为浮点数的存储方式不像整型数据那样01排列然后根据二进制计算即可，浮点数有其自己的存储方式。你可以很容易通过整型数据的二进制去计算10进制，但是浮点数的二进制却不是那么容易计算。<strong>IEEE754标准</strong>就定义了浮点数在二进制中的存储格式，这里不做过多介绍。</p>
+<p>  这个优化也是在DSP芯片的场景中，我们使用int类型强制转换来对浮点数进行截断操作，这句话看起来很简单，实际上是一个非常复杂的操作，因为<strong>浮点数的存储方式不像整型数据那样01排列然后根据二进制计算即可，浮点数有其自己的存储方式。你可以很容易通过整型数据的二进制去计算10进制，但是浮点数的二进制却不是那么容易计算</strong>。<strong>IEEE754标准</strong>就定义了浮点数在二进制中的存储格式，这里不做过多介绍。
   总之知道存储格式后我们可以通过位运算去进行浮点数截断的操作，我之前在CCSV5.5仿真TMS320VC5509A芯片的平台上测试过，这个方法确实可以提升程序运行速度，甚至比库函数还快，但是在x86平台上几乎没有多少提升。（代码是参考网上一篇文章的，但是我忘记链接了&hellip;）</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">union</span> <span class="n">FloatBit</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
@@ -508,7 +510,8 @@ $$</p>
 </span></span><span class="line"><span class="cl">	<span class="n">ret</span><span class="p">.</span><span class="n">f_b</span> <span class="o">-=</span> <span class="n">bias</span><span class="p">.</span><span class="n">f_b</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">ret</span><span class="p">.</span><span class="n">f_b</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>  需要注意你的平台上int位数应该和float一样都是32位，如果int是是16位应该换成long或者其他32位的整型类型。</p>
+</span></span></code></pre></div><p>  需要注意你的平台上int位数应该和float一样都是32位，如果int是16位应该换成long或者其他32位的整型类型。</p>
+<h2 id="五最终程序实现">五、最终程序实现<a hidden class="anchor" aria-hidden="true" href="#五最终程序实现">#</a></h2>
 <p>  最终我们优化完的程序如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
@@ -558,7 +561,11 @@ $$</p>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div>
+</span></span></code></pre></div><p>  我们尝试将输入$x$改成$x+b,b=100i, -100 &lt; i &lt; 100$,去将这个程序与C标准库程序对比，如图所示：
+<img loading="lazy" src="/images/%e4%b8%a4%e7%a7%8d%e6%96%b9%e6%b3%95%e5%9c%a8%e4%b8%8d%e5%90%8c%e8%be%93%e5%85%a5%e8%8c%83%e5%9b%b4%e7%9a%84%e6%80%a7%e8%83%bd%e5%af%b9%e6%af%94.png" alt="两种方法在不同输入范围的性能对比"  />
+
+可以看到，两种方法在<strong>运行时间和稳定性</strong>上差距很小，我们的程序达到了我们预期的性能了</p>
+
 
   </div>
 
