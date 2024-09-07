@@ -10,7 +10,7 @@
 <meta name="description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
 <meta name="author" content="徐乾朝">
 <link rel="canonical" href="https://againwq.github.io/tags/%E4%BC%98%E5%8C%96/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.54840a39f352dd1226fb566b940f4396c306c178f35053fd8eb1adf7a6af72eb.css" integrity="sha256-VIQKOfNS3RIm&#43;1ZrlA9DlsMGwXjzUFP9jrGt96avcus=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.ba1a4fc61912c7a1a2e150401ef2a1ccce1663a4fe464388bbad3d5f74249b77.css" integrity="sha256-uhpPxhkSx6Gi4VBAHvKhzM4WY6T&#43;RkOIu609X3Qkm3c=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://againwq.github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://againwq.github.io/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://againwq.github.io/favicon-32x32.png">
@@ -164,8 +164,8 @@ code.has-jax {
                 </a>
             </li>
             <li>
-                <a href="https://againwq.github.io/posts/" title="文章">
-                    <span>文章</span>
+                <a href="https://againwq.github.io/posts/" title="系列">
+                    <span>系列</span>
                 </a>
             </li>
             <li>
@@ -174,8 +174,8 @@ code.has-jax {
                 </a>
             </li>
             <li>
-                <a href="https://againwq.github.io/tags/" title="分类">
-                    <span>分类</span>
+                <a href="https://againwq.github.io/tags/" title="标签">
+                    <span>标签</span>
                 </a>
             </li>
         </ul>
@@ -207,7 +207,7 @@ code.has-jax {
 2.C实现sinx泰勒展开 我们通过控制精度来控制展开项数，并且我们只考虑$0-2\pi$的范围，归一化处理我们之后再详细考虑，通过泰勒展开公式我们的C程序如下，
 #include &lt;math.h&gt; #define degree 1e-2 float fun_sin(float x) { float res, term; int i; int factor; // 阶乘 term = x; // 每一项的结果 factor = 1; res = term; for (i = 1; fabs(term) &gt; degree; i&#43;&#43;) { factor *= (2 * i) * (2 * i &#43; 1); term = pow(-1, i) * pow(x, 2 * i &#43; 1) / factor; res &#43;= term; } return res; } 上面的代码基本是严格按照公式计算的，可惜的是它并不能正常工作，这涉及到计算阶乘时整数溢出的问题。当输入比较小，比如0....</p>
   </div>
-  <footer class="entry-footer"><span title='2024-09-04 00:00:00 +0000 UTC'>2024-09-04</span>&nbsp;·&nbsp;xqc</footer>
+  <footer class="entry-footer"><span title='2024-09-04 00:00:00 +0000 UTC'>2024-09-04</span>&nbsp;·&nbsp;4 分钟&nbsp;·&nbsp;676 字</footer>
   <a class="entry-link" aria-label="post link to C语言使用泰勒展开实现sinx并优化" href="https://againwq.github.io/posts/linux_c/c%E5%AE%9E%E7%8E%B0sinx%E5%B9%B6%E4%BC%98%E5%8C%96/"></a>
 </article>
     </main>
