@@ -59,42 +59,42 @@
     </style>
 </noscript>
 
-<script type="text/javascript"
-        async
-        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-MathJax.Hub.Config({
-  tex2jax: {
-    inlineMath: [['$','$'], ['\\(','\\)']],
-    displayMath: [['$$','$$'], ['\[\[','\]\]']],
-    processEscapes: true,
-    processEnvironments: true,
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-    TeX: { equationNumbers: { autoNumber: "AMS" },
-         extensions: ["AMSmath.js", "AMSsymbols.js"] }
-  }
-});
+<script type="text/javascript" async
+  src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\[\[', '\]\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        TeX: {
+          equationNumbers: { autoNumber: "AMS" },
+          extensions: ["AMSmath.js", "AMSsymbols.js"]
+        }
+      }
+    });
 
-MathJax.Hub.Queue(function() {
-    
-    
-    
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i = 0; i < all.length; i += 1) {
+    MathJax.Hub.Queue(function () {
+      
+      
+      
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
         all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-});
-</script>
+      }
+    });
+  </script>
 
 <style>
-code.has-jax {
+  code.has-jax {
     font: inherit;
     font-size: 100%;
     background: inherit;
     border: inherit;
     color: #515151;
-}
+  }
 </style>
-
 <link rel="icon" href="/avatar.png">
 
 <script defer crossorigin="anonymous" src="/assets/js/extended/custom.js"></script><meta property="og:title" content="C语言使用泰勒展开实现sinx并优化" />
@@ -260,13 +260,7 @@ code.has-jax {
     <h1 class="post-title">
       C语言使用泰勒展开实现sinx并优化
     </h1>
-    <div class="post-meta"><span title='2024-09-04 00:00:00 +0000 UTC'>2024-09-04</span>&nbsp;·&nbsp;4 分钟&nbsp;·&nbsp;676 字<span id="/posts/Linux_C/C实现sinx并优化.md" class="leancloud_visitors" data-flag-title="C语言使用泰勒展开实现sinx并优化">
-    <em class="post-meta-item-text">&nbsp;·&nbsp;阅读量 </em>
-    <i class="leancloud-visitors-count"></i>
-</span>
-
-
-
+    <div class="post-meta"><span title='2024-09-04 00:00:00 +0000 UTC'>2024-09-04</span>&nbsp;·&nbsp;4 分钟&nbsp;·&nbsp;676 字
 
 </div>
   </header>
@@ -642,18 +636,15 @@ $$</p>
 <div id="vcomments"></div>
 
 <script type="text/javascript">
-    let el = document.getElementsByClassName('leancloud_visitors');
-    if(el){
-        for(let i = 0; i < el.length; i++){
-            let id = el[i].getAttribute('id');
-            id = id.replace(".md", "/").toLowerCase()
-            el[i].setAttribute('id', id);
-        }
-    }
+    let meta = document.getElementsByClassName('post-meta')[0];
+    let id = window.location.pathname;
+    let title = document.title.split(' | ')[0];
+    meta.innerHTML += `<span id="${id}" class="leancloud_visitors" data-flag-title="${title}">
+        <em class="post-meta-item-text">&nbsp;·&nbsp;阅读量 </em>
+        <i class="leancloud-visitors-count"></i>`;
+    
 </script>
-
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-
 <script type="text/javascript">
     new Valine({
         el: '#vcomments',
@@ -662,8 +653,25 @@ $$</p>
         avatar: 'retro',
         placeholder: '说点什么吧...',
         visitor: 'true',
-        avatar_cdn: 'https:\/\/cravatar.cn\/avatar\/',
+        avatar_cdn: 'https:\/\/cravatar.cn\/avatar\/'
     });
+
+    let comments = document.getElementById('vcomments');
+    comments.addEventListener("click", (e) => {      
+        if(e.target.classList.contains('vsubmit')){
+            const nick = document.querySelector("input[name='nick']").value;
+            const mail = document.querySelector("input[type='email']").value;
+            const reg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+            if(nick.length < 3){
+                alert('昵称长度不得小于3');
+                e.stopPropagation();
+            }
+            if(!reg.test(mail)){
+                alert('邮箱格式不正确');
+                e.stopPropagation();
+            }
+        }
+    }, true);
 </script>
 </article>
     </main>

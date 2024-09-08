@@ -57,42 +57,42 @@
     </style>
 </noscript>
 
-<script type="text/javascript"
-        async
-        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-MathJax.Hub.Config({
-  tex2jax: {
-    inlineMath: [['$','$'], ['\\(','\\)']],
-    displayMath: [['$$','$$'], ['\[\[','\]\]']],
-    processEscapes: true,
-    processEnvironments: true,
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-    TeX: { equationNumbers: { autoNumber: "AMS" },
-         extensions: ["AMSmath.js", "AMSsymbols.js"] }
-  }
-});
+<script type="text/javascript" async
+  src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\[\[', '\]\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        TeX: {
+          equationNumbers: { autoNumber: "AMS" },
+          extensions: ["AMSmath.js", "AMSsymbols.js"]
+        }
+      }
+    });
 
-MathJax.Hub.Queue(function() {
-    
-    
-    
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i = 0; i < all.length; i += 1) {
+    MathJax.Hub.Queue(function () {
+      
+      
+      
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
         all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-});
-</script>
+      }
+    });
+  </script>
 
 <style>
-code.has-jax {
+  code.has-jax {
     font: inherit;
     font-size: 100%;
     background: inherit;
     border: inherit;
     color: #515151;
-}
+  }
 </style>
-
 <link rel="icon" href="/avatar.png">
 
 <script defer crossorigin="anonymous" src="/assets/js/extended/custom.js"></script><meta property="og:title" content="C语言" />
@@ -207,13 +207,7 @@ code.has-jax {
 2.C实现sinx泰勒展开 我们通过控制精度来控制展开项数，并且我们只考虑$0-2\pi$的范围，归一化处理我们之后再详细考虑，通过泰勒展开公式我们的C程序如下，
 #include &lt;math.h&gt; #define degree 1e-2 float fun_sin(float x) { float res, term; int i; int factor; // 阶乘 term = x; // 每一项的结果 factor = 1; res = term; for (i = 1; fabs(term) &gt; degree; i&#43;&#43;) { factor *= (2 * i) * (2 * i &#43; 1); term = pow(-1, i) * pow(x, 2 * i &#43; 1) / factor; res &#43;= term; } return res; } 上面的代码基本是严格按照公式计算的，可惜的是它并不能正常工作，这涉及到计算阶乘时整数溢出的问题。当输入比较小，比如0....</p>
   </div>
-  <footer class="entry-footer"><span title='2024-09-04 00:00:00 +0000 UTC'>2024-09-04</span>&nbsp;·&nbsp;4 分钟&nbsp;·&nbsp;676 字<span id="/posts/Linux_C/C实现sinx并优化.md" class="leancloud_visitors" data-flag-title="C语言使用泰勒展开实现sinx并优化">
-    <em class="post-meta-item-text">&nbsp;·&nbsp;阅读量 </em>
-    <i class="leancloud-visitors-count"></i>
-</span>
-
-
-</footer>
+  <footer class="entry-footer"><span title='2024-09-04 00:00:00 +0000 UTC'>2024-09-04</span>&nbsp;·&nbsp;4 分钟&nbsp;·&nbsp;676 字</footer>
   <a class="entry-link" aria-label="post link to C语言使用泰勒展开实现sinx并优化" href="https://againwq.github.io/posts/linux_c/c%E5%AE%9E%E7%8E%B0sinx%E5%B9%B6%E4%BC%98%E5%8C%96/"></a>
 </article>
     </main>
