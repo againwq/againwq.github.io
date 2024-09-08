@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>C on 徐乾朝的博客</title>
-    <link>https://againwq.github.io/tags/c/</link>
-    <description>Recent content in C on 徐乾朝的博客</description>
+    <title>C语言 on 徐乾朝的博客</title>
+    <link>https://againwq.github.io/tags/c%E8%AF%AD%E8%A8%80/</link>
+    <description>Recent content in C语言 on 徐乾朝的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 04 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://againwq.github.io/tags/c/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 04 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://againwq.github.io/tags/c%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>C语言使用泰勒展开实现sinx并优化</title>
       <link>https://againwq.github.io/posts/linux_c/c%E5%AE%9E%E7%8E%B0sinx%E5%B9%B6%E4%BC%98%E5%8C%96/</link>
