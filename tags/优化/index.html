@@ -10,7 +10,7 @@
 <meta name="description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
 <meta name="author" content="徐乾朝">
 <link rel="canonical" href="https://againwq.github.io/tags/%E4%BC%98%E5%8C%96/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.ba1a4fc61912c7a1a2e150401ef2a1ccce1663a4fe464388bbad3d5f74249b77.css" integrity="sha256-uhpPxhkSx6Gi4VBAHvKhzM4WY6T&#43;RkOIu609X3Qkm3c=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.be2b9394d18952a10663627c3ba44fc9d3a0c79ef4e44d7d15193eb168e1a0ea.css" integrity="sha256-viuTlNGJUqEGY2J8O6RPydOgx5705E19FRk&#43;sWjhoOo=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://againwq.github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://againwq.github.io/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://againwq.github.io/favicon-32x32.png">
@@ -202,13 +202,14 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>一、sinx泰勒展开的C实现 1.sinx泰勒展开公式 sinx的泰勒展开如下： $$ sinx = x - \frac{x^3}{3!} &#43; \frac{x^5}{5!} - \frac{x^7}{7!} &#43; … &#43; \frac{(-1)^n}{(2n &#43; 1)!}x^{2n&#43;1} $$
+    <p>一、sinx泰勒展开的C实现 1.sinx泰勒展开公式 sinx的泰勒展开如下：
+$$ sinx = x - \frac{x^3}{3!} &#43; \frac{x^5}{5!} - \frac{x^7}{7!} &#43; … &#43; \frac{(-1)^n}{(2n &#43; 1)!}x^{2n&#43;1} $$
 其中n从0开始计算，我采用的公式形态上是x=0处的泰勒展开。实际上我们可以把x写成$x = x &#43; x_0$来实现$x=x_0$处的展开
 2.C实现sinx泰勒展开 我们通过控制精度来控制展开项数，并且我们只考虑$0-2\pi$的范围，归一化处理我们之后再详细考虑，通过泰勒展开公式我们的C程序如下，
 #include &lt;math.h&gt; #define degree 1e-2 float fun_sin(float x) { float res, term; int i; int factor; // 阶乘 term = x; // 每一项的结果 factor = 1; res = term; for (i = 1; fabs(term) &gt; degree; i&#43;&#43;) { factor *= (2 * i) * (2 * i &#43; 1); term = pow(-1, i) * pow(x, 2 * i &#43; 1) / factor; res &#43;= term; } return res; } 上面的代码基本是严格按照公式计算的，可惜的是它并不能正常工作，这涉及到计算阶乘时整数溢出的问题。当输入比较小，比如0....</p>
   </div>
   <footer class="entry-footer"><span title='2024-09-04 00:00:00 +0000 UTC'>2024-09-04</span>&nbsp;·&nbsp;4 分钟&nbsp;·&nbsp;676 字</footer>
-  <a class="entry-link" aria-label="post link to C语言使用泰勒展开实现sinx并优化" href="https://againwq.github.io/posts/linux_c/c%E5%AE%9E%E7%8E%B0sinx%E5%B9%B6%E4%BC%98%E5%8C%96/"></a>
+  <a class="entry-link" aria-label="post link to C语言使用泰勒展开实现sinx并优化" href="https://againwq.github.io/posts/c%E8%AF%AD%E8%A8%80/c%E5%AE%9E%E7%8E%B0sinx%E5%B9%B6%E4%BC%98%E5%8C%96/"></a>
 </article>
     </main>
     
