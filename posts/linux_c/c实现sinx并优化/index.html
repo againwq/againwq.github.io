@@ -635,15 +635,7 @@ $$</p>
 
 <div id="vcomments"></div>
 
-<script type="text/javascript">
-    let meta = document.getElementsByClassName('post-meta')[0];
-    let id = window.location.pathname;
-    let title = document.title.split(' | ')[0];
-    meta.innerHTML += `<span id="${id}" class="leancloud_visitors" data-flag-title="${title}">
-        <em class="post-meta-item-text">&nbsp;·&nbsp;阅读量 </em>
-        <i class="leancloud-visitors-count"></i>`;
-    
-</script>
+
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 <script type="text/javascript">
     new Valine({
@@ -662,7 +654,7 @@ $$</p>
             const nick = document.querySelector("input[name='nick']").value;
             const mail = document.querySelector("input[type='email']").value;
             const reg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
-            if(nick.length < 3){
+            if(nick.length < 2){
                 alert('昵称长度不得小于3');
                 e.stopPropagation();
             }
