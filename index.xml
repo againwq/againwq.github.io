@@ -15,24 +15,23 @@
       <guid>https://againwq.github.io/posts/debian%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8/goldendict/</guid>
       <description>GoldenDict的基本使用，提供词典资源和调用百度api翻译的方法</description>
       <content:encoded><![CDATA[<h2 id="一goldendict基本介绍">一、GoldenDict基本介绍</h2>
-<p>   GoldenDict是一款开源的词典软件，它具有高度的定制性，可以自定义软件界面，它支持导入词典数据、调用外部网站和自定义程序等功能，对于需要
-在学习中阅读英文文献时非常方便使用。在Debian12中可以直接通过apt命令下载该软件</p>
+<p>   GoldenDict 是一款开源的词典软件，它具有高度的定制性，可以自定义软件界面，它支持导入词典数据、调用外部网站和自定义程序等功能，对于需要
+在学习中阅读英文文献时非常方便使用。在 Debian12 中可以直接通过 apt 命令下载该软件</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo apt update
 </span></span><span class="line"><span class="cl">sudo apt install goldendict
 </span></span></code></pre></div><p>  下载完毕后，软件界面如下：</p>
 <p><img loading="lazy" src="/images/goldendict%e8%bd%af%e4%bb%b6.png" alt="GoldenDict软件界面"  />
 </p>
-<p>   在上面工具栏的<strong>编辑 -&gt; 首选项 -&gt; 界面</strong>可以设置界面语言，并且可以配置内置的一些主题风格，本文不讨论如何自定义界面风格。在<strong>编辑 -&gt; 首选项 -&gt; 词典</strong>可以配置词典数据来源。Golden支持多种词典来源，包括本地的词典数据、远程词典服务器、调用搜索引擎和调用脚本程序等。本文会给出一些在网络上搜集的本地词典资源（感谢这些资源的提供者），并给出一个调用<strong>百度官方api</strong>进行翻译的python脚本。</p></p>
+<p>   在上面工具栏的<strong>编辑 -&gt; 首选项 -&gt; 界面</strong>可以设置界面语言，并且可以配置内置的一些主题风格，本文不讨论如何自定义界面风格。在<strong>编辑 -&gt; 首选项 -&gt; 词典</strong>可以配置词典数据来源。GoldenDict 支持多种词典来源，包括本地的词典数据、远程词典服务器、调用搜索引擎和调用脚本程序等。本文会给出一些在网络上搜集的本地词典资源（感谢这些资源的提供者），并给出一个调用<strong>百度官方api</strong>进行翻译的 python 脚本。</p>
 <h2 id="二词典资源配置">二、词典资源配置</h2>
 <h3 id="1本地词典资源">1.本地词典资源</h3>
-<p>   打开<strong>编辑 -&gt; 首选项 -&gt; 词典 -&gt; 词典来源 -&gt; 文件</strong>，这里可以配置词典文件的路径，如果是文件夹路径需要勾上递归搜索，然后点击应用，这样GoldenDict会扫描所有指定的词典文件，并为其生成索引。如果词典数量比较多这个过程会比较漫长，这取决于你的电脑的性能。索引生成完毕后这些词典就可以使用了，索引文件会存储在本地磁盘中，下一次打开不需要重新生成了。我自己用的词典资源：
-<a href="https://pan.baidu.com/s/10IJi6kACrTUGvQcmH_E-Bw?pwd=bp47">词典资源</a> 提取码: bp47。</br>
-   示例效果如图所示：</p>
+<p>   打开<strong>编辑 -&gt; 首选项 -&gt; 词典 -&gt; 词典来源 -&gt; 文件</strong>，这里可以配置词典文件的路径，如果是文件夹路径需要勾上递归搜索，然后点击应用，这样 GoldenDict 会扫描所有指定的词典文件，并为其生成索引。如果词典数量比较多这个过程会比较漫长，这取决于你的电脑的性能。索引生成完毕后这些词典就可以使用了，索引文件会存储在本地磁盘中，下一次打开不需要重新生成了。我自己用的词典资源：
+<a href="https://pan.baidu.com/s/10IJi6kACrTUGvQcmH_E-Bw?pwd=bp47">词典资源</a> 提取码: bp47。示例效果如图所示：</p>
 <p><img loading="lazy" src="/images/goldendict%e6%95%88%e6%9e%9c.png" alt="GoldenDict示例效果"  />
-</p></p>
+</p>
 <h3 id="2-调用百度翻译接口">2. 调用百度翻译接口</h3>
-<p>   拥有这些本地词典后，GoldenDict会帮助你从这些本地词典搜索你要查询的单词或者词语，只要你的词典中有对应的记录即可。但是GoldenDict并不支持句子翻译，即它不会把句子拆成一组单词分别去查询，除非你的词典中有这样一条句子的翻译记录。因此我考虑将百度翻译接入到GoldenDict中这样方便进行一些简短的句子翻译。</br>
-   首先需要在<a href="https://api.fanyi.baidu.com/">百度翻译api</a>注册账户，选择通用翻译服务，进行认证后高级版通用翻译服务每个月会有一定量的免费额度。然后在<strong>管理控制台获取你的APP ID和密钥</strong>，替换下面代码中的APP ID和密钥，并配置日志文件路径：</p>
+<p>   拥有这些本地词典后，GoldenDict 会帮助你从这些本地词典搜索你要查询的单词或者词语，只要你的词典中有对应的记录即可。但是GoldenDict并不支持句子翻译，即它不会把句子拆成一组单词分别去查询，除非你的词典中有这样一条句子的翻译记录。因此我考虑将百度翻译接入到 GoldenDict 中这样方便进行一些简短的句子翻译。</br>
+   首先需要在<a href="https://api.fanyi.baidu.com/">百度翻译api</a>注册账户，选择通用翻译服务，进行认证后高级版通用翻译服务每个月会有一定量的免费额度。然后在<strong>管理控制台获取你的APP ID和密钥</strong>，替换下面代码中的 APP ID 和密钥，并配置日志文件路径：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">random</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">re</span>
@@ -122,7 +121,7 @@
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s2">&#34;trans_result&#34;</span><span class="p">]:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">res</span> <span class="o">+=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&#34;dst&#34;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-</span></span></code></pre></div><p>   然后需要在GoldenDict中配置，打开<strong>编辑 -&gt; 词典 -&gt; 词典来源 -&gt; 程序</strong>，添加下面一条记录：</p>
+</span></span></code></pre></div><p>   然后需要在 GoldenDict 中配置，打开<strong>编辑 -&gt; 词典 -&gt; 词典来源 -&gt; 程序</strong>，添加下面一条记录：</p>
 <table>
 <thead>
 <tr>
@@ -141,10 +140,10 @@
 </tr>
 </tbody>
 </table>
-<p>   为了方便使用GoldenDict，而不是每次都打开软件然后复制进去，我们需要启用<strong>编辑 -&gt; 首选项 -&gt; 热键</strong>，然后<strong>勾上使用Ctrl + C + C获取剪切板的热键</strong>，这样GoldenDict只要在后台启动，我们就可以使用热键调出翻译窗口了，效果如图所示：</p>
+<p>   为了方便使用 GoldenDict，而不是每次都打开软件然后复制进去，我们需要启用<strong>编辑 -&gt; 首选项 -&gt; 热键</strong>，然后<strong>勾上使用Ctrl + C + C获取剪切板的热键</strong>，这样 GoldenDict 只要在后台启动，我们就可以使用热键调出翻译窗口了，效果如图所示：</p>
 <p><img loading="lazy" src="/images/%e7%99%be%e5%ba%a6%e7%bf%bb%e8%af%91%e6%95%88%e6%9e%9c%e5%b1%95%e7%a4%ba.png" alt="百度翻译和热键效果展示"  />
 </p>
-<p>   上面的代码没有像图片中一样提供实时获取额度的功能，这个功能和真实的额度有一些小偏差，而且存在一些小bug，因此就不放上来了。读者可以自行修改代码实现自定义功能。
+<p>   上面的代码没有像图片中一样提供实时获取额度的功能，这个功能和真实的额度有一些小偏差，而且存在一些小 bug ，因此就不放上来了。读者可以自行修改代码实现自定义功能。
 当然，百度翻译api网站的控制台可以查看每月的额度，只是不是实时的。</p>
 ]]></content:encoded>
     </item>
@@ -156,21 +155,21 @@
       
       <guid>https://againwq.github.io/posts/c%E8%AF%AD%E8%A8%80/c%E5%AE%9E%E7%8E%B0sinx%E5%B9%B6%E4%BC%98%E5%8C%96/</guid>
       <description>C语言使用泰勒展开实现sinx的思路，以及程序的优化设计</description>
-      <content:encoded><![CDATA[<h2 id="一sinx泰勒展开的c实现">一、sinx泰勒展开的C实现</h2>
-<h3 id="1sinx泰勒展开公式">1.sinx泰勒展开公式</h3>
-<p>   sinx的泰勒展开如下：</p>
+      <content:encoded><![CDATA[<h2 id="一sinx-泰勒展开的c实现">一、sinx 泰勒展开的C实现</h2>
+<h3 id="1sinx-泰勒展开公式">1.sinx 泰勒展开公式</h3>
+<p>   sinx 的泰勒展开如下：</p>
 <p>$$
 sinx = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + &hellip; + \frac{(-1)^n}{(2n + 1)!}x^{2n+1}
 $$</p>
-<p>   其中n从0开始计算，我采用的公式形态上是x=0处的泰勒展开。实际上我们可以把x写成$x = x + x_0$来实现$x=x_0$处的展开</p>
+<p>   其中 n 从 0 开始计算，我采用的公式形态上是 $x=0$ 处的泰勒展开。实际上我们可以把 $x$ 写成 $x = x + x_0$ 来实现 $x=x_0$ 处的展开</p>
 <h3 id="2c实现sinx泰勒展开">2.C实现sinx泰勒展开</h3>
-<p>   我们通过控制精度来控制展开项数，并且我们只考虑$0-2\pi$的范围，归一化处理我们之后再详细考虑，通过泰勒展开公式我们的C程序如下，</p>
+<p>   我们通过控制精度来控制展开项数，并且我们只考虑 $0-2\pi$ 的范围，归一化处理我们之后再详细考虑，通过泰勒展开公式我们的 C 程序如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp">#define degree 1e-2
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="kt">float</span> <span class="nf">fun_sin</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">res</span><span class="p">,</span> <span class="n">term</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">res</span><span class="err">，</span> <span class="n">term</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">factor</span><span class="p">;</span>  <span class="c1">// 阶乘
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
@@ -186,16 +185,16 @@ $$</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">res</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>   上面的代码基本是严格按照公式计算的，可惜的是它并不能正常工作，这涉及到<strong>计算阶乘时整数溢出</strong>的问题。当输入比较小，比如0.2，那么大概在第二项就达到了我们设定的精度0.01了，此时factor为6，但是如果输入为6.23左右时，我们要计算10项以上才能达到我们设定的精度，第10项需要计算21的阶乘，即便使用<strong>64位无符号整型存储</strong>也不够，因此我们需要对其进行一定的优化</p>
-<h2 id="二sinx泰勒展开优化">二、sinx泰勒展开优化</h2>
+</span></span></code></pre></div><p>   上面的代码基本是严格按照公式计算的，可惜的是它并不能正常工作，这涉及到<strong>计算阶乘时整数溢出</strong>的问题。当输入比较小，比如 0.2，那么大概在第二项就达到了我们设定的精度 0.01 了，此时 factor 为 6，但是如果输入为 6.23 左右时，我们要计算 10 项以上才能达到我们设定的精度，第 10 项需要计算 21 的阶乘，即便使用 <strong>64 位无符号整型存储</strong>也不够，因此我们需要对其进行一定的优化。</p>
+<h2 id="二sinx-泰勒展开优化">二、sinx 泰勒展开优化</h2>
 <h3 id="1通过固定计算的阶数来保证不溢出">1.通过固定计算的阶数来保证不溢出</h3>
-<p>   很容易想到的一点就是我们可以通过固定展开的项数来保证计算过程不会溢出，比如我们固定每次展开项数为7，C程序如下</p>
+<p>   很容易想到的一点就是我们可以通过固定展开的项数来保证计算过程不会溢出，比如我们固定每次展开项数为 7，C 程序如下:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp">#define TIMES 7
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="kt">float</span> <span class="nf">fun_sin</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">res</span><span class="p">,</span> <span class="n">term</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">res</span><span class="err">，</span> <span class="n">term</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">factor</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
@@ -209,22 +208,22 @@ $$</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">res</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>  经测试，该程序在$0-2\pi$内不会出现精度溢出的问题</p>
+</span></span></code></pre></div><p>  经测试，该程序在 $0-2\pi$ 内不会出现精度溢出的问题</p>
 <h3 id="2从公式出发改变实现方法">2.从公式出发改变实现方法</h3>
-<p>   观察sinx的泰勒展开我们可以得到如下规律：</p></p>
+<p>   观察 sinx 的泰勒展开我们可以得到如下规律：</p>
 <ul>
-<li>记第i项展开式为 $a_i = \frac{(-1)^i}{(2i + 1)!}x^{2i+1}$</li>
+<li>记第 i 项展开式为 $a_i = \frac{(-1)^i}{(2i + 1)!}x^{2i+1}$</li>
 <li>则有 $a_i = a_{i-1} \cdot \frac{-x^2}{(2i)\cdot(2i+1)}$</li>
 </ul>
-<p>   我们可以看出相邻两项相差一个乘积因子$\frac{-x^2}{(2i)\cdot(2i+1)}$，而且这个因子中不会产生太大的数据导致数据溢出。这样我们可以保留通过精度控制展开项数的方法，而且不会产生数据溢出。实现的C程序如下：</p>
+<p>   我们可以看出相邻两项相差一个乘积因子 $\frac{-x^2}{(2i)\cdot(2i+1)}$，而且这个因子中不会产生太大的数据导致数据溢出。这样我们可以保留通过精度控制展开项数的方法，而且不会产生数据溢出。实现的 C 程序如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="cp">#define pi 3.14159265
 </span></span></span><span class="line"><span class="cl"><span class="cp">#define degree 1e-2		 </span><span class="c1">// ̩精度设置
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="kt">float</span> <span class="n">factor_diff_mem</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="c1">// 乘积因子的分母部分
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">6</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">42</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">72</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">	<span class="mf">1.0</span> <span class="o">/</span> <span class="mi">110</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">156</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">210</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">272</span><span class="p">,</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">342</span>
+</span></span><span class="line"><span class="cl">	<span class="mf">1.0</span><span class="err">，</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">6</span><span class="err">，</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">20</span><span class="err">，</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">42</span><span class="err">，</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">72</span><span class="err">，</span>
+</span></span><span class="line"><span class="cl">	<span class="mf">1.0</span> <span class="o">/</span> <span class="mi">110</span><span class="err">，</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">156</span><span class="err">，</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">210</span><span class="err">，</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">272</span><span class="err">，</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">342</span>
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">float</span> <span class="nf">fun_sin</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">)</span>
@@ -244,19 +243,19 @@ $$</p>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>   这里我们也做了一些优化，我们不再在for循环中去计算因子的分母部分，而是在编译阶段直接计算出，<strong>程序运行时直接查表即可</strong>，这也是经典的<strong>空间换时间</strong>的优化方式。可以看到现在这个程序已经没有指数和阶乘这种费时又可能导致溢出的计算了</p>
+</span></span></code></pre></div><p>   这里我们也做了一些优化，我们不再在 for 循环中去计算因子的分母部分，而是在编译阶段直接计算出，<strong>程序运行时直接查表即可</strong>，这也是经典的<strong>空间换时间</strong>的优化方式。可以看到现在这个程序已经没有指数和阶乘这种费时又可能导致溢出的计算了</p>
 <h2 id="三三种方法时间比较">三、三种方法时间比较</h2>
 <h3 id="1测试环境和代码">1.测试环境和代码</h3>
-<p>   接下来我们将这两种方法和C标准库下的sinx进行时间上的比较，我采用的平台是<strong>x86_64，Debian 12系统，gcc12.2</strong>，测试代码如下：</p>
+<p>   接下来我们将这两种方法和C标准库下的sinx进行时间上的比较，我采用的平台是 <strong>x86_64，Debian 12 系统，gcc 12.2</strong>，测试代码如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">get_us_time</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">	<span class="k">struct</span> <span class="n">timeval</span> <span class="n">tv</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="nf">gettimeofday</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tv</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">gettimeofday</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tv</span><span class="err">，</span> <span class="nb">NULL</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">tv</span><span class="p">.</span><span class="n">tv_usec</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">sinx_time_test</span><span class="p">(</span><span class="kt">float</span> <span class="p">(</span><span class="o">*</span><span class="n">fun_sin</span><span class="p">)(</span><span class="kt">float</span><span class="p">),</span> <span class="kt">float</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">sinx_time_test</span><span class="p">(</span><span class="kt">float</span> <span class="p">(</span><span class="o">*</span><span class="n">fun_sin</span><span class="p">)(</span><span class="kt">float</span><span class="p">)</span><span class="err">，</span> <span class="kt">float</span> <span class="o">*</span><span class="n">data</span><span class="err">，</span> <span class="kt">int</span> <span class="n">n</span><span class="err">，</span> <span class="kt">int</span> <span class="n">count</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">start</span><span class="err">，</span> <span class="n">end</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">x</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
@@ -268,7 +267,7 @@ $$</p>
 </span></span><span class="line"><span class="cl">		<span class="p">{</span>
 </span></span><span class="line"><span class="cl">			<span class="n">x</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="n">n</span><span class="p">;</span>    <span class="c1">// 0-2pi取n个点
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nf">fun_sin</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">			<span class="c1">// printf(&#34;%f\n&#34;, data[i]);
+</span></span><span class="line"><span class="cl">			<span class="c1">// printf(&#34;%f\n&#34;， data[i]);
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">
@@ -276,7 +275,7 @@ $$</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>   这里采用两层循环是为了更方便看到差距以外，还要保证一个周期内不要取太多点，导致输入的x精度过高，这里我们不对精度做太高要求,</p>
+</span></span></code></pre></div><p>   这里采用两层循环是为了更方便看到差距以外，还要保证一个周期内不要取太多点，导致输入的x精度过高，这里我们不对精度做太高要求，</p></p>
 <h3 id="2程序运行时间对比">2.程序运行时间对比</h3>
 <p>   三种方法程序运行时间如下：</p>
 <table>
@@ -295,16 +294,16 @@ $$</p>
 </tr>
 </tbody>
 </table>
-<p>   多次运行数值上的结果可能不一样，但是三者的关系基本不变，标准库的sinx最快，其次是我们优化后的固定精度的实现，最后是固定周期的实现。我们可以看到优化后的固定精度的实现和C标准库执行时间差不多，只有<strong>几十us</strong>的差距，但是固定周期的实现方法运行的时间却是其他两种方法的<strong>10倍</strong>，可见其效率之低。</p>
+<p>   多次运行数值上的结果可能不一样，但是三者的关系基本不变，标准库的 sinx 最快，其次是我们优化后的固定精度的实现，最后是固定周期的实现。我们可以看到优化后的固定精度的实现和 C 标准库执行时间差不多，只有<strong>几十us</strong>的差距，但是固定周期的实现方法运行的时间却是其他两种方法的 <strong>10 倍</strong>，可见其效率之低。</p></p>
 <h3 id="3程序运行精度对比">3.程序运行精度对比</h3>
-<p>   我们借助gnuplot去绘制这三种方法的sinx曲线去大概对比精度，如图所示：
-<img loading="lazy" src="/images/sinx.png" alt="三种实现方法的sinx曲线"  />
-
-   可以看到，<strong>当x逐渐变大时，固定周期的方法的精度已经出现非常明显的误差了，而我们优化后的固定精度的方法几乎是与标准库的实现完全重叠，甚至我们可以尝试继续调小精度来提升程序运行速度</strong></p>
+<p>   我们借助 gnuplot 去绘制这三种方法的 sinx 曲线去大概对比精度，如图所示：</p>
+<p><img loading="lazy" src="/images/sinx.png" alt="三种实现方法的sinx曲线"  />
+</p>
+<p>   可以看到，<strong>当x逐渐变大时，固定周期的方法的精度已经出现非常明显的误差了，而我们优化后的固定精度的方法几乎是与标准库的实现完全重叠，甚至我们可以尝试继续调小精度来提升程序运行速度</strong></p></p>
 <h2 id="四输入归一化处理">四、输入归一化处理</h2>
-<p>   前面我们已经实现了速度接近标准库实现的泰勒展开，但是范围被限定在$(-2\pi, 2\pi)$之间，其实我们也可以输入超过这个范围的数据，但是随着输入的绝对值的变大，为了保证相同的精度，泰勒展开项数会逐渐增多，程序运行速度会越来越慢，最后很有有可能导致精度再次溢出。<strong>我们不希望不同的输入对程序的运行状态有太大的影响</strong>。因此，我们需要对输入进行归一化处理</p>
+<p>   前面我们已经实现了速度接近标准库实现的泰勒展开，但是范围被限定在 $(-2\pi， 2\pi)$ 之间，其实我们也可以输入超过这个范围的数据，但是随着输入的绝对值的变大，为了保证相同的精度，泰勒展开项数会逐渐增多，程序运行速度会越来越慢，最后很有有可能导致精度再次溢出。<strong>我们不希望不同的输入对程序的运行状态有太大的影响</strong>。因此，我们需要对输入进行归一化处理</p></p>
 <h3 id="1归一化操作">1.归一化操作</h3>
-<p>   归一化操作其实很简单，借助sinx的周期性，在本程序中归一化操作如下</p>
+<p>   归一化操作其实很简单，借助 sinx 的周期性，在本程序中归一化操作如下</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">float</span> <span class="n">T</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">;</span>  <span class="c1">// sinx周期为2pi
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
 </span></span><span class="line"><span class="cl"><span class="kt">float</span> <span class="nf">fun_sin</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">){</span>
@@ -313,7 +312,8 @@ $$</p>
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">x</span> <span class="o">-=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">T</span><span class="p">;</span>    <span class="c1">// sin(x) = sinx(x - 2n*pi)
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">...</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="2对除法的优化">2.对除法的优化</h3>
+</span></span></code></pre></div></p>
+<h3 id="2对除法的优化">2.对除法的优化</h3>
 <p>  在某些平台上，比如<strong>DSP芯片</strong>中，我们不希望程序中出现除法操作，因为除法是一个非常耗时的操作。在很多DSP芯片中<strong>加法和乘法</strong>是基本计算操作，cpu只需要<strong>一个指令</strong>就能完成，但是除法是非常耗时的，所以我们可以尝试改写一下，将其变成乘法的形式</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">float</span> <span class="n">T</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span>
 </span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">float</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">T</span> <span class="c1">// 编译阶段执行
@@ -322,15 +322,15 @@ $$</p>
 </span></span><span class="line"><span class="cl">	<span class="n">x</span> <span class="o">-=</span> <span class="n">T</span> <span class="o">*</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">x</span> <span class="o">*</span> <span class="n">f</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">...</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>  我们把涉及到除法的部分放到编译阶段执行，这样可以优化在某些不支持快速计算除法的平台上的运行速度</p>
+</span></span></code></pre></div><p>  我们把涉及到除法的部分放到编译阶段执行，这样可以优化在某些不支持快速计算除法的平台上的运行速度</p></p>
 <h3 id="3对浮点数截断的操作">3.对浮点数截断的操作</h3>
-<p>  这个优化也是在DSP芯片的场景中，我们使用int类型强制转换来对浮点数进行截断操作，这句话看起来很简单，实际上是一个非常复杂的操作，因为<strong>浮点数的存储方式不像整型数据那样01排列然后根据二进制计算即可，浮点数有其自己的存储方式。你可以很容易通过整型数据的二进制去计算10进制，但是浮点数的二进制却不是那么容易计算</strong>。<strong>IEEE754标准</strong>就定义了浮点数在二进制中的存储格式，这里不做过多介绍。</br>
-  总之知道存储格式后我们可以通过位运算去进行浮点数截断的操作，我之前在CCS V5.5仿真TMS320VC5509A芯片的平台上测试过，这个方法确实可以提升程序运行速度，甚至比库函数还快，但是在x86平台上几乎没有多少提升。（代码是参考网上一篇文章的，但是我忘记链接了&hellip;）</p>
+<p>  这个优化也是在DSP芯片的场景中，我们使用 int 类型强制转换来对浮点数进行截断操作，这句话看起来很简单，实际上是一个非常复杂的操作，因为<strong>浮点数的存储方式不像整型数据那样01排列然后根据二进制计算即可，浮点数有其自己的存储方式。你可以很容易通过整型数据的二进制去计算 10 进制，但是浮点数的二进制却不是那么容易计算</strong>。<strong>IEEE754标准</strong>就定义了浮点数在二进制中的存储格式，这里不做过多介绍。</br>
+  总之知道存储格式后我们可以通过位运算去进行浮点数截断的操作，我之前在 CCS V5.5 仿真 TMS320VC5509A 芯片的平台上测试过，这个方法确实可以提升程序运行速度，甚至比库函数还快，但是在 x86 平台上几乎没有多少提升。（代码是参考网上一篇文章的，但是我忘记链接了&hellip;）</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">union</span> <span class="n">FloatBit</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">f</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">f_b</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">ret</span><span class="p">,</span> <span class="n">bias</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">ret</span><span class="err">，</span> <span class="n">bias</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">Float2Int</span><span class="p">(</span><span class="kt">float</span> <span class="n">f</span><span class="p">)</span> <span class="c1">// 快速转换浮点数为整数
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
@@ -344,7 +344,7 @@ $$</p>
 </span></span><span class="line"><span class="cl">	<span class="n">ret</span><span class="p">.</span><span class="n">f_b</span> <span class="o">-=</span> <span class="n">bias</span><span class="p">.</span><span class="n">f_b</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">ret</span><span class="p">.</span><span class="n">f_b</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>  需要注意你的平台上int位数应该和float一样都是32位，如果int是16位应该换成long或者其他32位的整型类型。</p>
+</span></span></code></pre></div><p>  需要注意你的平台上 int 位数应该和 float 一样都是 32 位，如果int是 16 位应该换成 long 或者其他 32 位的整型类型。</p>
 <h2 id="五最终程序实现">五、最终程序实现</h2>
 <p>  最终我们优化完的程序如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
@@ -395,7 +395,7 @@ $$</p>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>  我们尝试将输入$x$改成$x+b,b=100i, -100 &lt; i &lt; 100$,去将这个程序与C标准库程序对比，如图所示：</p>
+</span></span></code></pre></div><p>  我们尝试将输入 $x$ 改成 $x+b,b=100i, -100 &lt; i &lt; 100$，去将这个程序与 C 标准库程序对比，如图所示：</p>
 <p><img loading="lazy" src="/images/%e4%b8%a4%e7%a7%8d%e6%96%b9%e6%b3%95%e5%9c%a8%e4%b8%8d%e5%90%8c%e8%be%93%e5%85%a5%e8%8c%83%e5%9b%b4%e7%9a%84%e6%80%a7%e8%83%bd%e5%af%b9%e6%af%94.png" alt="两种方法在不同输入范围的性能对比"  />
 </p>
 <p>  可以看到，两种方法在<strong>运行时间和稳定性</strong>上差距很小，我们的程序达到了我们预期的性能了</p>
