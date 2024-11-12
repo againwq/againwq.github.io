@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Series on 徐乾朝的博客</title>
+    <title>Series on Xu Qianchao&#39;s Blog</title>
     <link>https://againwq.github.io/series/</link>
-    <description>Recent content in Series on 徐乾朝的博客</description>
+    <description>Recent content in Series on Xu Qianchao&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Tue, 05 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://againwq.github.io/series/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://againwq.github.io/series/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>软件使用</title>
       <link>https://againwq.github.io/series/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/</link>
-      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 12 Nov 2024 00:00:00 +0000</pubDate>
       
       <guid>https://againwq.github.io/series/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/</guid>
       <description></description>
@@ -18,11 +18,11 @@
     </item>
     
     <item>
-      <title>Linux_C</title>
-      <link>https://againwq.github.io/series/linux_c/</link>
+      <title>C语言</title>
+      <link>https://againwq.github.io/series/c%E8%AF%AD%E8%A8%80/</link>
       <pubDate>Wed, 04 Sep 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://againwq.github.io/series/linux_c/</guid>
+      <guid>https://againwq.github.io/series/c%E8%AF%AD%E8%A8%80/</guid>
       <description></description>
       <content:encoded><![CDATA[]]></content:encoded>
     </item>

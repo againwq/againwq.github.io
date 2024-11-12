@@ -5,10 +5,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>软件使用 | 徐乾朝的博客</title>
+<title>软件使用 | Xu Qianchao&#39;s Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
-<meta name="author" content="徐乾朝">
+<meta name="author" content="xuqianchao">
 <link rel="canonical" href="https://againwq.github.io/series/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.be2b9394d18952a10663627c3ba44fc9d3a0c79ef4e44d7d15193eb168e1a0ea.css" integrity="sha256-viuTlNGJUqEGY2J8O6RPydOgx5705E19FRk&#43;sWjhoOo=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://againwq.github.io/favicon.ico">
@@ -121,9 +121,9 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://againwq.github.io" accesskey="h" title="徐乾朝的博客 (Alt + H)">
+            <a href="https://againwq.github.io" accesskey="h" title="Xu Qianchao&#39;s Blog (Alt + H)">
                 <img src="https://againwq.github.io/images/avatar.png" alt="" aria-label="logo"
-                    height="35">徐乾朝的博客</a>
+                    height="35">Xu Qianchao&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -193,6 +193,21 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2>本地docker部署libretranslate翻译模型并采用CUDA加速
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>一、Libretanslate基本介绍 Libretanslate 是一个开源的，基于AI驱动的翻译软件，官方网站提供了在线的翻译功能，并且可以申请 api 密钥去调用 api 将翻译能力嵌入到我们自己的程序或者软件中。当然，官方的github有详细的本地部署教程，如果有能力建议根据官方的 README 部署，本文是对可能遇到的一些问题的补充。本文采用的是 docker 部署，当然官方提供了直接通过 pip 包部署，读者可以根据自己的需求选择。效果图如下：
+二. docker 与 nvidia docker 支持的前置条件 首先需要保证你的本地系统已经安装的 docker 环境，建议采用国内的源安装，比如清华源、阿里源等。同时建议配置docker镜像源防止由于网络问题无法拉取镜像。这里不提供安装配置命令，建议读者自行搜索相关资料。 使用 nvidia 的 docker 加速，需要读者本地拥有 nvidia 的显卡，并安装了显卡驱动。如果没有 nvidia 的显卡支持，可以跳过这一部分，进行 cpu 版本的本地部署。 首先要在自己的电脑上安装 nvidia docker 支持，参考的官方地址。根据你的 linux 发行版复制粘贴命令就行了，debian 发行版的安装命令如下：
+# 添加 apt 源 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | \ sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg &amp;&amp; \ curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \ sed &#39;s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g&#39; | \ tee /etc/apt/sources....</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-11-12 00:00:00 +0000 UTC'>2024-11-12</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;328 字
+</footer>
+  <a class="entry-link" aria-label="post link to 本地docker部署libretranslate翻译模型并采用CUDA加速" href="https://againwq.github.io/posts/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/libretranslate%E7%9A%84docker%E7%89%88%E6%9C%AC%E9%83%A8%E7%BD%B2/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2>Debian12中GoldenDict词典软件的使用
     </h2>
   </header>
@@ -206,12 +221,12 @@ import requests import random import re from hashlib import md5 import sys impor
   </div>
   <footer class="entry-footer"><span title='2024-11-05 00:00:00 +0000 UTC'>2024-11-05</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;356 字
 </footer>
-  <a class="entry-link" aria-label="post link to Debian12中GoldenDict词典软件的使用" href="https://againwq.github.io/posts/debian%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8/goldendict/"></a>
+  <a class="entry-link" aria-label="post link to Debian12中GoldenDict词典软件的使用" href="https://againwq.github.io/posts/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/goldendict/"></a>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://againwq.github.io">徐乾朝的博客</a></span>
+    <span>&copy; 2024 <a href="https://againwq.github.io">Xu Qianchao&#39;s Blog</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
