@@ -19,8 +19,8 @@
 <p><img loading="lazy" src="/images/Libretranslate%e7%bf%bb%e8%af%91%e6%95%88%e6%9e%9c.png" alt="libretranslate翻译效果"  />
 </p>
 <h2 id="二-docker-与-nvidia-docker-支持的前置条件">二. docker 与 nvidia docker 支持的前置条件</h2>
-<p>   首先需要保证你的本地系统已经安装的 docker 环境，建议采用国内的源安装，比如清华源、阿里源等。同时建议配置docker镜像源防止由于网络问题无法拉取镜像。这里不提供安装配置命令，建议读者自行搜索相关资料。</br>
-   使用 nvidia 的 docker 加速，需要读者本地拥有 nvidia 的显卡，并安装了显卡驱动。如果没有 nvidia 的显卡支持，可以跳过这一部分，进行 cpu 版本的本地部署。</br>
+<p>   首先需要保证你的本地系统已经安装的 docker 环境，建议采用国内的源安装，比如清华源、阿里源等。同时建议配置docker镜像源防止由于网络问题无法拉取镜像。这里不提供安装配置命令，建议读者自行搜索相关资料。<code>&lt;/br&gt;</code>
+   使用 nvidia 的 docker 加速，需要读者本地拥有 nvidia 的显卡，并安装了显卡驱动。如果没有 nvidia 的显卡支持，可以跳过这一部分，进行 cpu 版本的本地部署。<code>&lt;/br&gt;</code>
    首先要在自己的电脑上安装 nvidia docker 支持，参考的<a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">官方地址</a>。根据你的 linux 发行版复制粘贴命令就行了，debian 发行版的安装命令如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl"><span class="c1"># 添加 apt 源</span>
 </span></span><span class="line"><span class="cl">curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey <span class="p">|</span> <span class="se">\
@@ -54,10 +54,10 @@
 </span></span><span class="line"><span class="cl">ENV <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:/usr/local/cuda/lib64
 </span></span><span class="line"><span class="cl">ENV <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/usr/local/cuda/bin
 </span></span><span class="line"><span class="cl">ENV <span class="nv">CUDA_HOME</span><span class="o">=</span>/usr/local/cuda
-</span></span></code></pre></div><p>   然后通过<code>docker compose -f docker-compose.cuda.yml up -d --build</code>进行构建并部署即可。同样的，构建成功 docker 会启动在本地 5000 端口，每次创建容器都会从网络上下载指定的翻译模型。</p>
+</span></span></code></pre></div><p>   然后通过 <code>docker compose -f docker-compose.cuda.yml up -d --build</code>进行构建并部署即可。同样的，构建成功 docker 会启动在本地 5000 端口，每次创建容器都会从网络上下载指定的翻译模型。</p>
 <h2 id="四可能遇到的问题">四、可能遇到的问题</h2>
 <h3 id="1-构建镜像时apt和pip下载太慢">1. 构建镜像时apt和pip下载太慢</h3>
-<p>   apt 和 pip 默认的官方源在国内访问不太稳定，可以在执行<code>apt install</code>和<code>pip install</code>之前更换镜像源为国内源，需要在对应的 Dockerfile中修改：</p>
+<p>   apt 和 pip 默认的官方源在国内访问不太稳定，可以在执行 <code>apt install</code>和 <code>pip install</code>之前更换镜像源为国内源，需要在对应的 Dockerfile中修改：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl"><span class="c1"># 更换apt源为清华源</span>
 </span></span><span class="line"><span class="cl">RUN sed -i <span class="s1">&#39;s/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g&#39;</span>  /etc/apt/sources.list
 </span></span><span class="line"><span class="cl">
@@ -78,8 +78,13 @@
 </span></span><span class="line"><span class="cl">ENTRYPOINT <span class="o">[</span><span class="s2">&#34;libretranslate&#34;</span>, <span class="s2">&#34;--host&#34;</span>, <span class="s2">&#34;0.0.0.0&#34;</span>, <span class="s2">&#34;--load-only&#34;</span>，<span class="s2">&#34;zh,en&#34;</span><span class="o">]</span>
 </span></span></code></pre></div><p>   这是参考的解决方案的<a href="https://community.libretranslate.com/t/failing-to-download-from-cloudflare-with-connectionrefusederror/960">链接</a>，这里提供我保存的<a href="/common/index.json">index.json文件</a></p>
 <h3 id="3-启用-cuda-加速后进行翻译出现内部错误">3. 启用 cuda 加速后进行翻译出现内部错误</h3>
-<p>   建议先进入 docker 内部使用 python执行 <code>torch.cuda.is_available()</code> 查看 CUDA 是否成功支持。</br>
+<p>   建议先进入 docker 内部使用 python执行 <code>torch.cuda.is_available()</code> 查看 CUDA 是否成功支持。<code>&lt;/br&gt;</code>
    这里我的问题是我的 <strong>nvidia 驱动版本是 debian12 默认下载的535, CUDA 版本最高支持到 12.2</strong>, 而且我本地的 CUDA 环境是 11.8。<strong>Libretranslate默认构建镜像的 CUDA 版本是 12.4</strong>, 版本过高导致 torch 调用硬件失败。解决的方法是将 Libretranslate 构建时采用的基础镜像从 <code>FROM nvidia/cuda:12.4.1-devel-ubuntu20.04</code> 更换为 <code>FROM nvidia/cuda:12.2.0-devel-ubuntu20.04</code>。 注意一定要是 12 版本以上的，我之前采用与本地相同的 11.8 启动仍然失败了，<code>torch.cuda.is_available()</code> 的返回值是 True，但是运行时会出现动态链接库找不到的问题，当前这个版本好像默认要求 CUDA 版本大于 12。</p>
+<h3 id="参考文献">参考文献</h3>
+<blockquote>
+<p><a href="https://github.com/LibreTranslate/LibreTranslate">LibreTranslate的github</a> <code>&lt;/br&gt;</code>
+<a href="https://community.libretranslate.com/t/failing-to-download-from-cloudflare-with-connectionrefusederror/960">翻译模型下载失败参考解决方案</a> <code>&lt;/br&gt;</code></p>
+</blockquote>
 ]]></content:encoded>
     </item>
     

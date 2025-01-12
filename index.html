@@ -236,10 +236,10 @@
   </header>
   <div class="entry-content">
     <p>一、Libretanslate基本介绍 Libretanslate 是一个开源的，基于AI驱动的翻译软件，官方网站提供了在线的翻译功能，并且可以申请 api 密钥去调用 api 将翻译能力嵌入到我们自己的程序或者软件中。当然，官方的github有详细的本地部署教程，如果有能力建议根据官方的 README 部署，本文是对可能遇到的一些问题的补充。本文采用的是 docker 部署，当然官方提供了直接通过 pip 包部署，读者可以根据自己的需求选择。效果图如下：
-二. docker 与 nvidia docker 支持的前置条件 首先需要保证你的本地系统已经安装的 docker 环境，建议采用国内的源安装，比如清华源、阿里源等。同时建议配置docker镜像源防止由于网络问题无法拉取镜像。这里不提供安装配置命令，建议读者自行搜索相关资料。 使用 nvidia 的 docker 加速，需要读者本地拥有 nvidia 的显卡，并安装了显卡驱动。如果没有 nvidia 的显卡支持，可以跳过这一部分，进行 cpu 版本的本地部署。 首先要在自己的电脑上安装 nvidia docker 支持，参考的官方地址。根据你的 linux 发行版复制粘贴命令就行了，debian 发行版的安装命令如下：
+二. docker 与 nvidia docker 支持的前置条件 首先需要保证你的本地系统已经安装的 docker 环境，建议采用国内的源安装，比如清华源、阿里源等。同时建议配置docker镜像源防止由于网络问题无法拉取镜像。这里不提供安装配置命令，建议读者自行搜索相关资料。&lt;/br&gt; 使用 nvidia 的 docker 加速，需要读者本地拥有 nvidia 的显卡，并安装了显卡驱动。如果没有 nvidia 的显卡支持，可以跳过这一部分，进行 cpu 版本的本地部署。&lt;/br&gt; 首先要在自己的电脑上安装 nvidia docker 支持，参考的官方地址。根据你的 linux 发行版复制粘贴命令就行了，debian 发行版的安装命令如下：
 # 添加 apt 源 curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | \ sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg &amp;&amp; \ curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \ sed &#39;s#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g&#39; | \ tee /etc/apt/sources....</p>
   </div>
-  <footer class="entry-footer"><span title='2024-11-12 00:00:00 +0000 UTC'>2024-11-12</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;328 字
+  <footer class="entry-footer"><span title='2024-11-12 00:00:00 +0000 UTC'>2024-11-12</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;336 字
 </footer>
   <a class="entry-link" aria-label="post link to 本地docker部署libretranslate翻译模型并采用CUDA加速" href="https://againwq.github.io/posts/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/libretranslate%E7%9A%84docker%E7%89%88%E6%9C%AC%E9%83%A8%E7%BD%B2/"></a>
 </article>
@@ -281,7 +281,7 @@ $$ sinx = x - \frac{x^3}{3!} &#43; \frac{x^5}{5!} - \frac{x^7}{7!} &#43; … &#4
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="https://againwq.github.io">Xu Qianchao&#39;s Blog</a></span>
+    <span>&copy; 2025 <a href="https://againwq.github.io">Xu Qianchao&#39;s Blog</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
