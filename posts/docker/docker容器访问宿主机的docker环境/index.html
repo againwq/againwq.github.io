@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>docker容器访问宿主机的docker环境 | Xu Qianchao&#39;s Blog</title>
+<meta name="keywords" content="docker, 网络, Linux">
+<meta name="description" content="docker容器访问宿主机的docker环境">
+<meta name="author" content="xuqianchao">
+<link rel="canonical" href="https://againwq.github.io/posts/docker/docker%E5%AE%B9%E5%99%A8%E8%AE%BF%E9%97%AE%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9A%84docker%E7%8E%AF%E5%A2%83/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.91e78c6a94306fdc529f6c692ed938769fcb240b58a2cb5fe104bcf530297d43.css" integrity="sha256-keeMapQwb9xSn2xpLtk4dp/LJAtYostf4QS89TApfUM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://againwq.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://againwq.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://againwq.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://againwq.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://againwq.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+
+<script type="text/javascript" async
+  src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\[\[', '\]\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        TeX: {
+          equationNumbers: { autoNumber: "AMS" },
+          extensions: ["AMSmath.js", "AMSsymbols.js"]
+        }
+      }
+    });
+
+    MathJax.Hub.Queue(function () {
+      
+      
+      
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+
+<style>
+  code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+  }
+</style>
+<link rel="icon" href="/avatar.png">
+
+<script defer crossorigin="anonymous" src="/assets/js/extended/custom.js"></script><meta property="og:title" content="docker容器访问宿主机的docker环境" />
+<meta property="og:description" content="docker容器访问宿主机的docker环境" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://againwq.github.io/posts/docker/docker%E5%AE%B9%E5%99%A8%E8%AE%BF%E9%97%AE%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9A%84docker%E7%8E%AF%E5%A2%83/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-03-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2025-03-17T00:00:00+00:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="docker容器访问宿主机的docker环境"/>
+<meta name="twitter:description" content="docker容器访问宿主机的docker环境"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "系列",
+      "item": "https://againwq.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "docker容器访问宿主机的docker环境",
+      "item": "https://againwq.github.io/posts/docker/docker%E5%AE%B9%E5%99%A8%E8%AE%BF%E9%97%AE%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9A%84docker%E7%8E%AF%E5%A2%83/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "docker容器访问宿主机的docker环境",
+  "name": "docker容器访问宿主机的docker环境",
+  "description": "docker容器访问宿主机的docker环境",
+  "keywords": [
+    "docker", "网络", "Linux"
+  ],
+  "articleBody": "一、问题描述 当我们使用docker容器的时候，有时候我们需要访问宿主机的docker环境，比如我们需要在容器中访问宿主机的docker服务，或者我们需要在容器中访问宿主机的docker网络。这时候我们就需要进行一些配置。\n二、docker容器访问宿主机的docker环境 要想让docker容器访问宿主机器的docker环境，并可以在docker容器中使用docker命令，我们需要在docker容器中挂载宿主机的docker.sock文件和docker程序。docker.sock 文件是docker的socket文件，docker的api通过这个文件来进行通信。docker程序是docker的命令行程序，我们可以通过这个程序来操作docker，比如启动容器，停止容器等。在启动docker容器的时候，我们可以通过-v参数来挂载这两个文件，示例如下：\ndocker run -d --name controller --privileged -v /usr/bin/docker:/usr/bin/docker # 挂载docker程序 -v /var/run/docker.sock:/var/run/docker.sock # 挂载docker socket文件 -t ubuntu:latest 注意，这里我们使用了--privileged参数，这个参数是为了让docker容器拥有更高的权限，这样我们才能在docker容器中使用docker命令。如果不加这个参数，我们在docker容器中使用docker命令的时候会报错，提示权限不够。 还需要注意的是，这里必须保证宿主机操作系统的glibc版本和容器运行的镜像的glibc版本相同，否则在容器中执行docker命令会出现glibc版本冲突的问题。因此容器和宿主机最好采用相同的linux发行版本。\n三、在docker容器内部访问其他容器的网络命名空间 1. Linux网络命名空间 Linux 的网络命名空间（Network Namespace）是一种内核提供的资源隔离机制，它为系统中的网络资源提供了独立的上下文环境，网络命名空间允许在同一物理主机上创建多个相互隔离的网络环境。每个网络命名空间都有自己独立的网络设备（如网卡）、IP 地址、路由表、防火墙规则等网络资源。不同网络命名空间中的网络配置相互独立，互不影响。例如，在一个命名空间中配置的 IP 地址，在其他命名空间中不会冲突，也无法直接访问。这就像是在同一台主机上虚拟出了多台独立的网络设备，每个设备都有自己的网络栈。 通过刚刚的配置我们可以在容器内部使用docker network去配置容器的网络，但有时候我们需要更加复杂的网络配置，比如为两个容器创建veth pair。这就需要我们在容器内部访问其他容器的Linux 网络命名空间。\n2. 配置方法 一般的容器，如何没有使用host网络模式，都会有自己的网络命名空间，但是docker服务并没有把他们挂载到/var/run/netns目录下，因此使用ip netns等命令是无法访问到这些网络命名空间的。我们通常使用docker inspect获取容器的进程号，然后通过/proc/$pid/ns/net文件来访问容器的网络命名空间，因此我们可以通过挂载/proc目录来访问容器的网络命名空间。示例如下:\ndocker run -d --name controller --privileged -v /usr/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v /proc:/host_proc # 挂载宿主机的/proc -t ubuntu:latest 为了防止/proc与容器内部的/proc目录冲突，这里我将其挂载为/host_proc。之后我们在容器内部将其他容器的命名空间链接到/var/run/netns目录下，就可以使用容器的pid直接访问容器的命名空间，而不需要输入完整的路径。比如我有一个pid为123的容器，示例命令如下\nln -s /host_proc/123/ns/net /var/run/netns/123 3. host网络模式 通过上面的配置我们已经让容器可以访问其他容器的命令空间了。但是我们想要进行为两个容器创建veth pair或者使用linux bridge去连接容器，建议使用host网络模式。host网络模式是docker的一种网络模式，使用host网络模式的容器会和宿主机共享网络命名空间，这样容器就可以直接访问宿主机的网络设备，这样当我们使用ip link或者brctl等命令创建网络设备的时候，保证我们是在宿主机上创建的，而不是在容器内部创建的。\n四、注意事项 容器和宿主机最好采用相同的linux发行版本，以避免glibc版本冲突的问题。 使用--privileged参数让docker容器拥有更高的权限，这样我们才能在docker容器中使用docker命令。 使用host网络模式，可以让容器和宿主机共享网络命名空间，这样容器就可以直接访问宿主机的网络设备。 如果想要创建veth pair或者使用linux bridge去连接容器，然后使用ping等命令测试网络连通性，记得需要在你的特权容器中进行如下配置，否则可能会出现网络连通性问题： sysctl -w net.bridge.bridge-nf-call-iptables=0 # 关闭iptables的bridge-nf功能 sysctl -w net.ipv4.icmp_echo_ignore_all=0 # 开启icmp响应 上面的这些配置会破坏docker的隔离性，在生产环境中请慎重使用。 ",
+  "wordCount" : "87",
+  "inLanguage": "zh",
+  "datePublished": "2025-03-17T00:00:00Z",
+  "dateModified": "2025-03-17T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "xuqianchao"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://againwq.github.io/posts/docker/docker%E5%AE%B9%E5%99%A8%E8%AE%BF%E9%97%AE%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9A%84docker%E7%8E%AF%E5%A2%83/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Xu Qianchao's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://againwq.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://againwq.github.io" accesskey="h" title="Xu Qianchao&#39;s Blog (Alt + H)">
+                <img src="https://againwq.github.io/images/avatar.png" alt="" aria-label="logo"
+                    height="35">Xu Qianchao&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://againwq.github.io/" title="主页">
+                    <span>主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://againwq.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://againwq.github.io/archives/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://againwq.github.io/posts/" title="系列">
+                    <span>系列</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://againwq.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://againwq.github.io">主页</a>&nbsp;»&nbsp;<a href="https://againwq.github.io/posts/">系列</a></div>
+    <h1 class="post-title">
+      docker容器访问宿主机的docker环境
+    </h1>
+    <div class="post-description">
+      docker容器访问宿主机的docker环境
+    </div>
+    <div class="post-meta"><span title='2025-03-17 00:00:00 +0000 UTC'>2025-03-17</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;87 字
+
+
+</div>
+  </header>
+  <div class="tags-container">
+    <ul class="post-tags">
+      <li><a href="https://againwq.github.io/tags/docker/">docker</a></li>
+      <li><a href="https://againwq.github.io/tags/%E7%BD%91%E7%BB%9C/">网络</a></li>
+      <li><a href="https://againwq.github.io/tags/linux/">Linux</a></li>
+    </ul>
+  </div> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+            <summary accesskey="c" title="(Alt + C)">
+                <span class="details">目录</span>
+            </summary>
+
+            <div class="inner"><ul>
+                    <li>
+                        <a href="#%e4%b8%80%e9%97%ae%e9%a2%98%e6%8f%8f%e8%bf%b0" aria-label="一、问题描述">一、问题描述</a></li>
+                    <li>
+                        <a href="#%e4%ba%8cdocker%e5%ae%b9%e5%99%a8%e8%ae%bf%e9%97%ae%e5%ae%bf%e4%b8%bb%e6%9c%ba%e7%9a%84docker%e7%8e%af%e5%a2%83" aria-label="二、docker容器访问宿主机的docker环境">二、docker容器访问宿主机的docker环境</a></li>
+                    <li>
+                        <a href="#%e4%b8%89%e5%9c%a8docker%e5%ae%b9%e5%99%a8%e5%86%85%e9%83%a8%e8%ae%bf%e9%97%ae%e5%85%b6%e4%bb%96%e5%ae%b9%e5%99%a8%e7%9a%84%e7%bd%91%e7%bb%9c%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4" aria-label="三、在docker容器内部访问其他容器的网络命名空间">三、在docker容器内部访问其他容器的网络命名空间</a><ul>
+                            
+                    <li>
+                        <a href="#1-linux%e7%bd%91%e7%bb%9c%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4" aria-label="1. Linux网络命名空间">1. Linux网络命名空间</a></li>
+                    <li>
+                        <a href="#2-%e9%85%8d%e7%bd%ae%e6%96%b9%e6%b3%95" aria-label="2. 配置方法">2. 配置方法</a></li>
+                    <li>
+                        <a href="#3-host%e7%bd%91%e7%bb%9c%e6%a8%a1%e5%bc%8f" aria-label="3. host网络模式">3. host网络模式</a></li></ul>
+                    </li>
+                    <li>
+                        <a href="#%e5%9b%9b%e6%b3%a8%e6%84%8f%e4%ba%8b%e9%a1%b9" aria-label="四、注意事项">四、注意事项</a>
+                    </li>
+                </ul>
+            </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+         
+         activeElement = elements[0];
+         const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+         document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+     }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 && 
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+             const id = encodeURI(element.getAttribute('id')).toLowerCase();
+             if (element === activeElement){
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+             } else {
+                 document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+             }
+         })
+     }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;   
+    }
+</script>
+  <div class="post-content"><h2 id="一问题描述">一、问题描述<a hidden class="anchor" aria-hidden="true" href="#一问题描述">#</a></h2>
+<p>   当我们使用docker容器的时候，有时候我们需要访问宿主机的docker环境，比如我们需要在容器中访问宿主机的docker服务，或者我们需要在容器中访问宿主机的docker网络。这时候我们就需要进行一些配置。</p>
+<h2 id="二docker容器访问宿主机的docker环境">二、docker容器访问宿主机的docker环境<a hidden class="anchor" aria-hidden="true" href="#二docker容器访问宿主机的docker环境">#</a></h2>
+<p>   要想让docker容器访问宿主机器的docker环境，并可以在docker容器中使用docker命令，我们需要在docker容器中挂载宿主机的<strong>docker.sock文件和docker程序</strong>。docker.sock 文件是docker的socket文件，docker的api通过这个文件来进行通信。docker程序是docker的命令行程序，我们可以通过这个程序来操作docker，比如启动容器，停止容器等。在启动docker容器的时候，我们可以通过<code>-v</code>参数来挂载这两个文件，示例如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl">docker run -d --name controller --privileged 
+</span></span><span class="line"><span class="cl">-v /usr/bin/docker:/usr/bin/docker <span class="c1"># 挂载docker程序</span>
+</span></span><span class="line"><span class="cl">-v /var/run/docker.sock:/var/run/docker.sock <span class="c1"># 挂载docker socket文件</span>
+</span></span><span class="line"><span class="cl">-t ubuntu:latest
+</span></span></code></pre></div><p>   注意，这里我们使用了<code>--privileged</code>参数，这个参数是为了让docker容器拥有更高的权限，这样我们才能在docker容器中使用docker命令。如果不加这个参数，我们在docker容器中使用docker命令的时候会报错，提示权限不够。</br>
+   还需要注意的是，这里必须保证宿主机操作系统的<strong>glibc版本</strong>和容器运行的镜像的glibc版本相同，否则在容器中执行docker命令会出现glibc版本冲突的问题。因此容器和宿主机最好采用相同的linux发行版本。</p>
+<h2 id="三在docker容器内部访问其他容器的网络命名空间">三、在docker容器内部访问其他容器的网络命名空间<a hidden class="anchor" aria-hidden="true" href="#三在docker容器内部访问其他容器的网络命名空间">#</a></h2>
+<h3 id="1-linux网络命名空间">1. Linux网络命名空间<a hidden class="anchor" aria-hidden="true" href="#1-linux网络命名空间">#</a></h3>
+<p>  Linux 的网络命名空间（Network Namespace）是一种内核提供的资源隔离机制，它为系统中的网络资源提供了独立的上下文环境，网络命名空间允许在同一物理主机上创建多个相互隔离的网络环境。每个网络命名空间都有自己独立的网络设备（如网卡）、IP 地址、路由表、防火墙规则等网络资源。不同网络命名空间中的网络配置相互独立，互不影响。例如，在一个命名空间中配置的 IP 地址，在其他命名空间中不会冲突，也无法直接访问。<strong>这就像是在同一台主机上虚拟出了多台独立的网络设备，每个设备都有自己的网络栈</strong>。</br>
+   通过刚刚的配置我们可以在容器内部使用docker network去配置容器的网络，但有时候我们需要更加复杂的网络配置，比如为两个容器创建<strong>veth pair</strong>。这就需要我们在容器内部访问其他容器的<strong>Linux 网络命名空间</strong>。</p>
+<h3 id="2-配置方法">2. 配置方法<a hidden class="anchor" aria-hidden="true" href="#2-配置方法">#</a></h3>
+<p>   一般的容器，如何没有使用host网络模式，都会有自己的网络命名空间，但是docker服务并没有把他们挂载到<code>/var/run/netns</code>目录下，因此使用<code>ip netns</code>等命令是无法访问到这些网络命名空间的。我们通常使用<code>docker inspect</code>获取容器的进程号，然后通过<code>/proc/$pid/ns/net</code>文件来访问容器的网络命名空间，因此我们可以通过挂载<code>/proc</code>目录来访问容器的网络命名空间。示例如下:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl">docker run -d --name controller --privileged 
+</span></span><span class="line"><span class="cl">-v /usr/bin/docker:/usr/bin/docker
+</span></span><span class="line"><span class="cl">-v /var/run/docker.sock:/var/run/docker.sock 
+</span></span><span class="line"><span class="cl">-v /proc:/host_proc <span class="c1"># 挂载宿主机的/proc</span>
+</span></span><span class="line"><span class="cl">-t ubuntu:latest
+</span></span></code></pre></div><p>   为了防止<code>/proc</code>与容器内部的<code>/proc</code>目录冲突，这里我将其挂载为<code>/host_proc</code>。之后我们在容器内部将其他容器的命名空间链接到<code>/var/run/netns</code>目录下，就可以使用容器的pid直接访问容器的命名空间，而不需要输入完整的路径。比如我有一个pid为123的容器，示例命令如下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl">ln -s /host_proc/123/ns/net /var/run/netns/123
+</span></span></code></pre></div><h3 id="3-host网络模式">3. host网络模式<a hidden class="anchor" aria-hidden="true" href="#3-host网络模式">#</a></h3>
+<p>   通过上面的配置我们已经让容器可以访问其他容器的命令空间了。但是我们想要进行为两个容器创建veth pair或者使用linux bridge去连接容器，建议使用<strong>host网络模式</strong>。host网络模式是docker的一种网络模式，使用host网络模式的容器会和宿主机共享网络命名空间，这样容器就可以直接访问宿主机的网络设备，这样当我们使用<code>ip link</code>或者<code>brctl</code>等命令创建网络设备的时候，保证我们是在宿主机上创建的，而不是在容器内部创建的。</p>
+<h2 id="四注意事项">四、注意事项<a hidden class="anchor" aria-hidden="true" href="#四注意事项">#</a></h2>
+<ul>
+<li>容器和宿主机最好采用相同的linux发行版本，以避免glibc版本冲突的问题。</li>
+<li>使用<code>--privileged</code>参数让docker容器拥有更高的权限，这样我们才能在docker容器中使用docker命令。</li>
+<li>使用<code>host</code>网络模式，可以让容器和宿主机共享网络命名空间，这样容器就可以直接访问宿主机的网络设备。</li>
+<li>如果想要创建veth pair或者使用linux bridge去连接容器，然后使用ping等命令测试网络连通性，记得需要在你的特权容器中进行如下配置，否则可能会出现网络连通性问题：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl">sysctl -w net.bridge.bridge-nf-call-iptables<span class="o">=</span><span class="m">0</span> <span class="c1"># 关闭iptables的bridge-nf功能</span>
+</span></span><span class="line"><span class="cl">sysctl -w net.ipv4.icmp_echo_ignore_all<span class="o">=</span><span class="m">0</span>  <span class="c1"># 开启icmp响应</span>
+</span></span></code></pre></div><ul>
+<li>上面的这些配置会破坏docker的隔离性，在生产环境中请慎重使用。</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+<nav class="paginav">
+  <a class="next" href="https://againwq.github.io/posts/docker/libretranslate%E7%9A%84docker%E7%89%88%E6%9C%AC%E9%83%A8%E7%BD%B2/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>本地docker部署libretranslate翻译模型并采用CUDA加速</span>
+  </a>
+</nav>
+
+  </footer>
+
+<div id="vcomments"></div>
+
+
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: 'mIHTzu4xPiVECrYmBvLyLJob-gzGzoHsz',
+        appKey: 'NwaBNu8gh1X350R6NEsJrLMT',
+        avatar: 'retro',
+        placeholder: '说点什么吧...',
+        visitor: 'true',
+        avatar_cdn: 'https:\/\/cravatar.cn\/avatar\/'
+    });
+
+    let comments = document.getElementById('vcomments');
+    comments.addEventListener("click", (e) => {      
+        if(e.target.classList.contains('vsubmit')){
+            const nick = document.querySelector("input[name='nick']").value;
+            const mail = document.querySelector("input[type='email']").value;
+            const reg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+            if(nick.length < 2){
+                alert('昵称长度不得小于3');
+                e.stopPropagation();
+            }
+            if(!reg.test(mail)){
+                alert('邮箱格式不正确');
+                e.stopPropagation();
+            }
+        }
+    }, true);
+</script>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="https://againwq.github.io">Xu Qianchao&#39;s Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

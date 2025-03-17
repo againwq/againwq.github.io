@@ -1,18 +1,65 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>docker部署 on Xu Qianchao&#39;s Blog</title>
-    <link>https://againwq.github.io/tags/docker%E9%83%A8%E7%BD%B2/</link>
-    <description>Recent content in docker部署 on Xu Qianchao&#39;s Blog</description>
+    <title>docker on Xu Qianchao&#39;s Blog</title>
+    <link>https://againwq.github.io/tags/docker/</link>
+    <description>Recent content in docker on Xu Qianchao&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Tue, 12 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://againwq.github.io/tags/docker%E9%83%A8%E7%BD%B2/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 17 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://againwq.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>docker容器访问宿主机的docker环境</title>
+      <link>https://againwq.github.io/posts/docker/docker%E5%AE%B9%E5%99%A8%E8%AE%BF%E9%97%AE%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9A%84docker%E7%8E%AF%E5%A2%83/</link>
+      <pubDate>Mon, 17 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://againwq.github.io/posts/docker/docker%E5%AE%B9%E5%99%A8%E8%AE%BF%E9%97%AE%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9A%84docker%E7%8E%AF%E5%A2%83/</guid>
+      <description>docker容器访问宿主机的docker环境</description>
+      <content:encoded><![CDATA[<h2 id="一问题描述">一、问题描述</h2>
+<p>   当我们使用docker容器的时候，有时候我们需要访问宿主机的docker环境，比如我们需要在容器中访问宿主机的docker服务，或者我们需要在容器中访问宿主机的docker网络。这时候我们就需要进行一些配置。</p>
+<h2 id="二docker容器访问宿主机的docker环境">二、docker容器访问宿主机的docker环境</h2>
+<p>   要想让docker容器访问宿主机器的docker环境，并可以在docker容器中使用docker命令，我们需要在docker容器中挂载宿主机的<strong>docker.sock文件和docker程序</strong>。docker.sock 文件是docker的socket文件，docker的api通过这个文件来进行通信。docker程序是docker的命令行程序，我们可以通过这个程序来操作docker，比如启动容器，停止容器等。在启动docker容器的时候，我们可以通过<code>-v</code>参数来挂载这两个文件，示例如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl">docker run -d --name controller --privileged 
+</span></span><span class="line"><span class="cl">-v /usr/bin/docker:/usr/bin/docker <span class="c1"># 挂载docker程序</span>
+</span></span><span class="line"><span class="cl">-v /var/run/docker.sock:/var/run/docker.sock <span class="c1"># 挂载docker socket文件</span>
+</span></span><span class="line"><span class="cl">-t ubuntu:latest
+</span></span></code></pre></div><p>   注意，这里我们使用了<code>--privileged</code>参数，这个参数是为了让docker容器拥有更高的权限，这样我们才能在docker容器中使用docker命令。如果不加这个参数，我们在docker容器中使用docker命令的时候会报错，提示权限不够。</br>
+   还需要注意的是，这里必须保证宿主机操作系统的<strong>glibc版本</strong>和容器运行的镜像的glibc版本相同，否则在容器中执行docker命令会出现glibc版本冲突的问题。因此容器和宿主机最好采用相同的linux发行版本。</p>
+<h2 id="三在docker容器内部访问其他容器的网络命名空间">三、在docker容器内部访问其他容器的网络命名空间</h2>
+<h3 id="1-linux网络命名空间">1. Linux网络命名空间</h3>
+<p>  Linux 的网络命名空间（Network Namespace）是一种内核提供的资源隔离机制，它为系统中的网络资源提供了独立的上下文环境，网络命名空间允许在同一物理主机上创建多个相互隔离的网络环境。每个网络命名空间都有自己独立的网络设备（如网卡）、IP 地址、路由表、防火墙规则等网络资源。不同网络命名空间中的网络配置相互独立，互不影响。例如，在一个命名空间中配置的 IP 地址，在其他命名空间中不会冲突，也无法直接访问。<strong>这就像是在同一台主机上虚拟出了多台独立的网络设备，每个设备都有自己的网络栈</strong>。</br>
+   通过刚刚的配置我们可以在容器内部使用docker network去配置容器的网络，但有时候我们需要更加复杂的网络配置，比如为两个容器创建<strong>veth pair</strong>。这就需要我们在容器内部访问其他容器的<strong>Linux 网络命名空间</strong>。</p>
+<h3 id="2-配置方法">2. 配置方法</h3>
+<p>   一般的容器，如何没有使用host网络模式，都会有自己的网络命名空间，但是docker服务并没有把他们挂载到<code>/var/run/netns</code>目录下，因此使用<code>ip netns</code>等命令是无法访问到这些网络命名空间的。我们通常使用<code>docker inspect</code>获取容器的进程号，然后通过<code>/proc/$pid/ns/net</code>文件来访问容器的网络命名空间，因此我们可以通过挂载<code>/proc</code>目录来访问容器的网络命名空间。示例如下:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl">docker run -d --name controller --privileged 
+</span></span><span class="line"><span class="cl">-v /usr/bin/docker:/usr/bin/docker
+</span></span><span class="line"><span class="cl">-v /var/run/docker.sock:/var/run/docker.sock 
+</span></span><span class="line"><span class="cl">-v /proc:/host_proc <span class="c1"># 挂载宿主机的/proc</span>
+</span></span><span class="line"><span class="cl">-t ubuntu:latest
+</span></span></code></pre></div><p>   为了防止<code>/proc</code>与容器内部的<code>/proc</code>目录冲突，这里我将其挂载为<code>/host_proc</code>。之后我们在容器内部将其他容器的命名空间链接到<code>/var/run/netns</code>目录下，就可以使用容器的pid直接访问容器的命名空间，而不需要输入完整的路径。比如我有一个pid为123的容器，示例命令如下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl">ln -s /host_proc/123/ns/net /var/run/netns/123
+</span></span></code></pre></div><h3 id="3-host网络模式">3. host网络模式</h3>
+<p>   通过上面的配置我们已经让容器可以访问其他容器的命令空间了。但是我们想要进行为两个容器创建veth pair或者使用linux bridge去连接容器，建议使用<strong>host网络模式</strong>。host网络模式是docker的一种网络模式，使用host网络模式的容器会和宿主机共享网络命名空间，这样容器就可以直接访问宿主机的网络设备，这样当我们使用<code>ip link</code>或者<code>brctl</code>等命令创建网络设备的时候，保证我们是在宿主机上创建的，而不是在容器内部创建的。</p>
+<h2 id="四注意事项">四、注意事项</h2>
+<ul>
+<li>容器和宿主机最好采用相同的linux发行版本，以避免glibc版本冲突的问题。</li>
+<li>使用<code>--privileged</code>参数让docker容器拥有更高的权限，这样我们才能在docker容器中使用docker命令。</li>
+<li>使用<code>host</code>网络模式，可以让容器和宿主机共享网络命名空间，这样容器就可以直接访问宿主机的网络设备。</li>
+<li>如果想要创建veth pair或者使用linux bridge去连接容器，然后使用ping等命令测试网络连通性，记得需要在你的特权容器中进行如下配置，否则可能会出现网络连通性问题：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl">sysctl -w net.bridge.bridge-nf-call-iptables<span class="o">=</span><span class="m">0</span> <span class="c1"># 关闭iptables的bridge-nf功能</span>
+</span></span><span class="line"><span class="cl">sysctl -w net.ipv4.icmp_echo_ignore_all<span class="o">=</span><span class="m">0</span>  <span class="c1"># 开启icmp响应</span>
+</span></span></code></pre></div><ul>
+<li>上面的这些配置会破坏docker的隔离性，在生产环境中请慎重使用。</li>
+</ul>
+]]></content:encoded>
+    </item>
+    
     <item>
       <title>本地docker部署libretranslate翻译模型并采用CUDA加速</title>
-      <link>https://againwq.github.io/posts/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/libretranslate%E7%9A%84docker%E7%89%88%E6%9C%AC%E9%83%A8%E7%BD%B2/</link>
+      <link>https://againwq.github.io/posts/docker/libretranslate%E7%9A%84docker%E7%89%88%E6%9C%AC%E9%83%A8%E7%BD%B2/</link>
       <pubDate>Tue, 12 Nov 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://againwq.github.io/posts/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/libretranslate%E7%9A%84docker%E7%89%88%E6%9C%AC%E9%83%A8%E7%BD%B2/</guid>
+      <guid>https://againwq.github.io/posts/docker/libretranslate%E7%9A%84docker%E7%89%88%E6%9C%AC%E9%83%A8%E7%BD%B2/</guid>
       <description>Libtranslate的本地部署，并采用CUDA加速</description>
       <content:encoded><![CDATA[<h2 id="一libretanslate基本介绍">一、Libretanslate基本介绍</h2>
 <p>   Libretanslate 是一个开源的，基于AI驱动的翻译软件，<a href="https://libretranslate.com/">官方网站</a>提供了在线的翻译功能，并且可以申请 api 密钥去调用 api 将翻译能力嵌入到我们自己的程序或者软件中。当然，<a href="https://github.com/LibreTranslate/LibreTranslate">官方的github</a>有详细的本地部署教程，如果有能力建议根据官方的 README 部署，本文是对可能遇到的一些问题的补充。本文采用的是 docker 部署，当然官方提供了直接通过 pip 包部署，读者可以根据自己的需求选择。效果图如下：</p>

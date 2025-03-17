@@ -9,10 +9,10 @@
     <lastBuildDate>Tue, 12 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://againwq.github.io/tags/%E9%98%85%E8%AF%BB%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>本地docker部署libretranslate翻译模型并采用CUDA加速</title>
-      <link>https://againwq.github.io/posts/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/libretranslate%E7%9A%84docker%E7%89%88%E6%9C%AC%E9%83%A8%E7%BD%B2/</link>
+      <link>https://againwq.github.io/posts/docker/libretranslate%E7%9A%84docker%E7%89%88%E6%9C%AC%E9%83%A8%E7%BD%B2/</link>
       <pubDate>Tue, 12 Nov 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://againwq.github.io/posts/%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8/libretranslate%E7%9A%84docker%E7%89%88%E6%9C%AC%E9%83%A8%E7%BD%B2/</guid>
+      <guid>https://againwq.github.io/posts/docker/libretranslate%E7%9A%84docker%E7%89%88%E6%9C%AC%E9%83%A8%E7%BD%B2/</guid>
       <description>Libtranslate的本地部署，并采用CUDA加速</description>
       <content:encoded><![CDATA[<h2 id="一libretanslate基本介绍">一、Libretanslate基本介绍</h2>
 <p>   Libretanslate 是一个开源的，基于AI驱动的翻译软件，<a href="https://libretranslate.com/">官方网站</a>提供了在线的翻译功能，并且可以申请 api 密钥去调用 api 将翻译能力嵌入到我们自己的程序或者软件中。当然，<a href="https://github.com/LibreTranslate/LibreTranslate">官方的github</a>有详细的本地部署教程，如果有能力建议根据官方的 README 部署，本文是对可能遇到的一些问题的补充。本文采用的是 docker 部署，当然官方提供了直接通过 pip 包部署，读者可以根据自己的需求选择。效果图如下：</p>
